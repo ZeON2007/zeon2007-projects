@@ -1,6 +1,3 @@
-/**
- * Copyright (c) 2015, Khudnitsky. All rights reserved.
- */
 package by.pvt.herzhot.filters;
 
 import javax.servlet.*;
