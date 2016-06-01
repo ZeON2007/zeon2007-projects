@@ -8,8 +8,6 @@ import java.io.Serializable;
  * @version 1.0
  *          30.05.2016
  */
-@Entity
-@Table(name = "authors")
 public class Author implements Serializable {
 
     private int id;
@@ -74,9 +72,6 @@ public class Author implements Serializable {
                 '}';
     }
 
-    @Id
-    @GeneratedValue
-    @Column(name = "id")
     public int getId() {
         return id;
     }
@@ -84,7 +79,6 @@ public class Author implements Serializable {
         this.id = id;
     }
 
-    @Column(name = "first_name")
     public String getFirstName() {
         return firstName;
     }
@@ -92,7 +86,6 @@ public class Author implements Serializable {
         this.firstName = firstName;
     }
 
-    @Column(name = "last_name")
     public String getLastName() {
         return lastName;
     }
@@ -100,7 +93,6 @@ public class Author implements Serializable {
         this.lastName = lastName;
     }
 
-    @Column(name = "email")
     public String getEmail() {
         return email;
     }
@@ -108,7 +100,6 @@ public class Author implements Serializable {
         this.email = email;
     }
 
-    @Column(name = "password")
     public String getPassword() {
         return password;
     }
@@ -116,7 +107,6 @@ public class Author implements Serializable {
         this.password = password;
     }
 
-    @Column(name = "access_lvl")
     public int getAccessLevel() {
         return accessLevel;
     }

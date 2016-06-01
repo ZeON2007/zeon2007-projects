@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="by.pvt.herzhot.pojos.Author" table="authors">
+        <id name="id" type="int" column="id">
+            <generator class="native"/>
+        </id>
+        <property name="firstName">
+            <column name="first_name"/>
+        </property>
+        <property name="lastName">
+            <column name="last_name"/>
+        </property>
+        <property name="email">
+            <column name="email"/>
+        </property>
+        <property name="password">
+            <column name="password"/>
+        </property>
+        <property name="accessLevel">
+            <column name="access_lvl"/>
+        </property>
+    </class>
+</hibernate-mapping> 
