@@ -16,6 +16,8 @@ import by.pvt.herzhot.utils.CommandsLogger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -34,7 +36,9 @@ public class AddNewsCommand extends AbstractCommand {
             News news = new News();
             news.setCategoryId(Integer.valueOf(request.getParameter(Parameters.CATEGORY_ID)));
             news.setAuthorId(currentAuthor.getId());
-            news.setDate(request.getParameter(Parameters.NEWS_DATE));
+            Timestamp ts = new Timestamp(new Date().getTime());
+//            news.setDate(request.getParameter(Parameters.NEWS_DATE));
+            news.setDate(new Timestamp(new Date().getTime()).toString());
             news.setName(request.getParameter(Parameters.NEWS_NAME));
             news.setDescription(request.getParameter(Parameters.NEWS_DESCRIPTION));
             news.setMainText(request.getParameter(Parameters.NEWS_BODYTEXT));
