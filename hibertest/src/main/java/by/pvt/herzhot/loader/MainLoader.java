@@ -1,12 +1,16 @@
 package by.pvt.herzhot.loader;
 
 import by.pvt.herzhot.dao.exceptions.DaoException;
-import by.pvt.herzhot.dao.impl.AuthorDaoImpl;
+import by.pvt.herzhot.dao.impl.DaoImpl;
+import by.pvt.herzhot.managers.CommandManager;
+import by.pvt.herzhot.managers.EntityManager;
 import by.pvt.herzhot.pojos.Author;
+import by.pvt.herzhot.pojos.Entity;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
+import static java.lang.System.*;
 
 /**
  * @author Herzhot
@@ -14,89 +18,100 @@ import java.util.Scanner;
  *          30.05.2016
  */
 public class MainLoader {
-
     public static void main(String[] args) {
 
-        Scanner scanner = new Scanner(System.in);
+        CommandManager commandManager = CommandManager.INSTANCE;
+        EntityManager entityManager = EntityManager.INSTANCE;
+        DaoImpl<Entity> dao = DaoImpl.getInstance();
+        Scanner scanner = new Scanner(in);
         boolean isLaunched = true;
-        while (isLaunched) {
-            System.out.println("Please choose next command:");
-            System.out.println("1: Delete author");
-            System.out.println("2: Find author");
-            System.out.println("3: Find all authors");
-            System.out.println("4: Save or update author");
-            System.out.println("5: Exit");
+        int selectedItem;
 
-            switch (Integer.valueOf(scanner.nextLine().trim())) {
+        while (isLaunched) {
+            commandManager.getMenuCommands();
+            try {
+                selectedItem = Integer.valueOf(scanner.nextLine().trim());
+            }
+            catch (NumberFormatException e) {
+                selectedItem = 0;
+            }
+            switch (selectedItem) {
                 case 1: {
-                    System.out.println("You choose - 1");
-                    System.out.println("Please select ID for deleting:");
+                    out.println("You choose - " + selectedItem);
+                    commandManager.getMenuEntities();
+                    selectedItem = commandManager.getSelectedItem();
+                    Entity entity = (Entity) commandManager.getEntities().get(selectedItem-1);
+                    out.println("Please select ID for deleting:");
                     try {
-                        System.out.println("Operation is successful: "
-                                + AuthorDaoImpl.INSTANCE.delete(Integer.valueOf(scanner.nextLine().trim())));
+                        int id  = Integer.valueOf(scanner.nextLine().trim());
+                        out.println("Operation is successful: " + dao.delete(entity, id));
                     }
-                    catch (DaoException e) {
-                        System.out.println("Deleted author isn't found!");
+                    catch (DaoException | NullPointerException e) {
+                        out.println("Deleted " + entity.getClass().getSimpleName()+ " isn't found!");
                     }
                     break;
                 }
+
                 case 2: {
-                    System.out.println("You choose - 2");
-                    System.out.println("Please select ID:");
-                    Author author;
+                    out.println("You choose - " + selectedItem);
+                    commandManager.getMenuEntities();
+                    selectedItem = commandManager.getSelectedItem();
+                    Entity entity = (Entity) commandManager.getEntities().get(selectedItem-1);
+                    out.println("Please select ID:");
                     try {
-                        author = AuthorDaoImpl.INSTANCE.find(Integer.valueOf(scanner.nextLine().trim()));
-                        System.out.println("Author is found: "
-                                + author.getFirstName() + " "
-                                + author.getLastName());
+                        int id  = Integer.valueOf(scanner.nextLine().trim());
+                        Entity receivedEntity = dao.find(entity, id);
+                        out.println(receivedEntity.getClass().getSimpleName() + " is found:");
+                        out.println(receivedEntity.toString());
                     }
-                    catch (DaoException e) {
-                        System.out.println("Author isn't found!");
+                    catch (DaoException | NullPointerException e) {
+                        out.println(entity.getClass().getSimpleName() + " isn't found!");
                     }
                     break;
                 }
+
                 case 3: {
-                    System.out.println("You choose - 3");
-                    System.out.println("List of authors:");
-                    List<Author> authors;
+                    out.println("You choose - " + selectedItem);
+                    commandManager.getMenuEntities();
+                    selectedItem = commandManager.getSelectedItem();
+                    Entity entity = (Entity) commandManager.getEntities().get(selectedItem-1);
+                    out.println("List of " + entity.getClass().getSimpleName() + ":");
+                    List<Entity> entities;
                     try {
-                        authors = AuthorDaoImpl.INSTANCE.findAll();
-                        for (Object author: authors) {
-                            System.out.println("No: "
-                                    + ((Author)author).getId() + " | "
-                                    + ((Author)author).getFirstName() + " "
-                                    + ((Author)author).getLastName());
+                        entities = dao.findAll(entity);
+                        for (Object object : entities) {
+                                out.println(object.toString());
                         }
                     }
                     catch (DaoException e) {
-                        System.out.println("Authors isn't found!");
+                        out.println(entity.getClass().getSimpleName() + "(e)s isn't found!");
                     }
                     break;
                 }
+
                 case 4: {
-                    System.out.println("You choose - 4");
-                    Author author = new Author();
-                    System.out.println("Please enter name:");
-                    author.setFirstName(scanner.nextLine().trim());
-                    System.out.println("Please enter surname:");
-                    author.setLastName(scanner.nextLine().trim());
+                    out.println("You choose - " + selectedItem);
+                    commandManager.getMenuEntities();
+                    selectedItem = commandManager.getSelectedItem();
+                    Entity entity = (Entity) commandManager.getEntities().get(selectedItem-1);
+                    Entity receivedEntity = entityManager.buildEntity(entity);
                     try {
-                        System.out.println("Operation is successful: "
-                                + AuthorDaoImpl.INSTANCE.saveOrUpdate(author));
+                        out.println("Operation is successful: " + dao.saveOrUpdate(receivedEntity));
                     }
-                    catch (DaoException e) {
-                        System.out.println("Operation failed. DAO error!");
+                    catch (DaoException | NullPointerException e) {
+                        out.println("Operation failed. DAO error!");
                     }
                     break;
                 }
+
                 case 5: {
-                    System.out.println("You choose - 5");
-                    System.out.println("Good-bye!");
+                    out.println("You choose - 5");
+                    out.println("Good-bye!");
                     isLaunched = false;
                     break;
                 }
                 default: {
-                    System.out.println("You choose wrong command!");
+                    out.println("You choose wrong command!");
                 }
 
             }

@@ -2,6 +2,7 @@ package by.pvt.herzhot.dao;
 
 import by.pvt.herzhot.dao.exceptions.DaoException;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -11,9 +12,9 @@ import java.util.List;
  */
 public interface IDao <T> {
 
-    T find(int id) throws DaoException;
-    List<T> findAll() throws DaoException;
-    boolean delete(int id) throws DaoException;
+    T find(T t, int id) throws DaoException;
+    List<T> findAll(T t) throws DaoException;
+    boolean delete(T t, int id) throws DaoException;
     boolean saveOrUpdate(T t) throws DaoException;
-
+    List getIdentifiers(T t) throws DaoException;
 }

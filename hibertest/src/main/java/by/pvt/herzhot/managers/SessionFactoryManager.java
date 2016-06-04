@@ -12,9 +12,9 @@ import org.hibernate.service.ServiceRegistry;
  */
 public class SessionFactoryManager {
 
-    private static final SessionFactory sessionFactory = buildSessionFactory();
+    private static final org.hibernate.SessionFactory sessionFactory = buildSessionFactory();
 
-    private static SessionFactory buildSessionFactory() {
+    private static org.hibernate.SessionFactory buildSessionFactory() {
         try {
             Configuration configuration = new Configuration();
             configuration.configure();
@@ -28,7 +28,7 @@ public class SessionFactoryManager {
         }
     }
 
-    public static SessionFactory getSessionFactory() {
+    public static org.hibernate.SessionFactory getSessionFactory() {
         return sessionFactory;
     }
     public static void shutdown() {

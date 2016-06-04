@@ -11,7 +11,7 @@
             com.mysql.jdbc.Driver
         </property>
         <property name="hibernate.connection.url">
-            jdbc:mysql://localhost:3306/hibertest
+            jdbc:mysql://localhost:3306/
         </property>
         <property name="hibernate.connection.username">
             root
@@ -35,6 +35,7 @@
 
         <!-- Mapping files -->
         <mapping resource="Author.hbm.xml"/>
+        <mapping resource="CategoryOfNews.hbm.xml"/>
 
     </session-factory>
 </hibernate-configuration>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping
+        package="by.pvt.herzhot.pojos"
+>
+    <class
+        name="CategoryOfNews"
+        table="categories"
+        schema="hibertest"
+    >
+        <id name="id" type="int" column="id" access="field">
+            <generator class="assigned"/>
+        </id>
+        <property
+            name="category"
+            column="category"
+            not-null="true"
+            access="property"
+        />
+
+    </class>
+</hibernate-mapping>

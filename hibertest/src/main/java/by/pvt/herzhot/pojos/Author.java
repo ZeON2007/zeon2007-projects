@@ -8,8 +8,9 @@ import java.io.Serializable;
  * @version 1.0
  *          30.05.2016
  */
-public class Author implements Serializable {
+public class Author implements Entity {
 
+    private static final long serialVersionUID = 1L;
     private int id;
     private String firstName;
     private String lastName;
@@ -23,7 +24,6 @@ public class Author implements Serializable {
         email = "";
         password = "";
     }
-
     public Author(int id, String firstName, String lastName, String email, String password, int accessLevel) {
         this.id = id;
         this.firstName = firstName;
