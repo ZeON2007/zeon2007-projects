@@ -1,7 +1,10 @@
 package by.pvt.herzhot.managers;
 
-import by.pvt.herzhot.pojos.Author;
-import by.pvt.herzhot.pojos.CategoryOfNews;
+import by.pvt.herzhot.pojos.inheritance.BankAccount;
+import by.pvt.herzhot.pojos.inheritance.BillingDetails;
+import by.pvt.herzhot.pojos.inheritance.CreditCard;
+import by.pvt.herzhot.pojos.other.Author;
+import by.pvt.herzhot.pojos.other.CategoryOfNews;
 import by.pvt.herzhot.pojos.Entity;
 
 import java.util.ArrayList;
@@ -22,6 +25,7 @@ public enum CommandManager {
     INSTANCE;
 
     private Scanner scanner = new Scanner(in);
+    // Menu of commands
     private List<String> menu = new ArrayList<>(Arrays.asList(
             "Delete entity",
             "Find entity",
@@ -29,9 +33,12 @@ public enum CommandManager {
             "Save or update entity",
             "Exit"
     ));
+    // Declaring all entities
     private List<Entity> entities = new ArrayList<>(Arrays.asList(
             new Author(),
-            new CategoryOfNews()
+            new CategoryOfNews(),
+            new CreditCard(),
+            new BankAccount()
     ));
 
     public void getMenuCommands(){

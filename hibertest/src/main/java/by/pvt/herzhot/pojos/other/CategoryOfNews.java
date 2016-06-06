@@ -1,6 +1,6 @@
-package by.pvt.herzhot.pojos;
+package by.pvt.herzhot.pojos.other;
 
-import java.io.Serializable;
+import by.pvt.herzhot.pojos.Entity;
 
 /**
  * @author Herzhot

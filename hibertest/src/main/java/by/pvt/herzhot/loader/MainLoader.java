@@ -4,7 +4,6 @@ import by.pvt.herzhot.dao.exceptions.DaoException;
 import by.pvt.herzhot.dao.impl.DaoImpl;
 import by.pvt.herzhot.managers.CommandManager;
 import by.pvt.herzhot.managers.EntityManager;
-import by.pvt.herzhot.pojos.Author;
 import by.pvt.herzhot.pojos.Entity;
 
 import java.util.List;
@@ -36,6 +35,7 @@ public class MainLoader {
                 selectedItem = 0;
             }
             switch (selectedItem) {
+                // Delete entity
                 case 1: {
                     out.println("You choose - " + selectedItem);
                     commandManager.getMenuEntities();
@@ -51,7 +51,7 @@ public class MainLoader {
                     }
                     break;
                 }
-
+                // Get entity by id
                 case 2: {
                     out.println("You choose - " + selectedItem);
                     commandManager.getMenuEntities();
@@ -69,7 +69,7 @@ public class MainLoader {
                     }
                     break;
                 }
-
+                // Get all entities
                 case 3: {
                     out.println("You choose - " + selectedItem);
                     commandManager.getMenuEntities();
@@ -88,7 +88,7 @@ public class MainLoader {
                     }
                     break;
                 }
-
+                // Save or update entity
                 case 4: {
                     out.println("You choose - " + selectedItem);
                     commandManager.getMenuEntities();
@@ -103,9 +103,9 @@ public class MainLoader {
                     }
                     break;
                 }
-
+                // Exit program
                 case 5: {
-                    out.println("You choose - 5");
+                    out.println("You choose - " + selectedItem);
                     out.println("Good-bye!");
                     isLaunched = false;
                     break;
