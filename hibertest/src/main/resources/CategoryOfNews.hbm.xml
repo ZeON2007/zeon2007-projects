@@ -12,7 +12,7 @@
         schema="hibertest"
     >
         <id name="id" type="int" column="id" access="field">
-            <generator class="assigned"/>
+            <generator class="native"/>
         </id>
         <property
             name="category"

@@ -5,7 +5,9 @@ import by.pvt.herzhot.pojos.inheritance.CreditCard;
 import by.pvt.herzhot.pojos.other.Author;
 import by.pvt.herzhot.pojos.other.CategoryOfNews;
 import by.pvt.herzhot.pojos.Entity;
+import by.pvt.herzhot.utils.InputValueValidator;
 
+import java.lang.reflect.Field;
 import java.util.Scanner;
 
 import static java.lang.System.in;
@@ -24,13 +26,22 @@ public enum EntityManager {
 
     public Entity buildEntity(final Entity entity) {
         if (entity instanceof Author) {
-            Author author = new Author();
-            author.setId(assignId());
-            out.println("Please enter name:");
-            author.setFirstName(scanner.nextLine().trim());
-            out.println("Please enter surname:");
-            author.setLastName(scanner.nextLine().trim());
-            return author;
+
+            Entity instance = null;
+            Class<?> clazz = entity.getClass();
+            try {
+                instance = (Entity) clazz.newInstance();
+                Field[] fields = clazz.getDeclaredFields();
+                for (Field field : fields) {
+                    field.setAccessible(true);
+                    if (!field.getName().equals("serialVersionUID")) {
+                        out.println("Input " + field.getName() + ":");
+                        field.set(instance, InputValueValidator.INSTANCE.validate(field.getType()));
+                    }
+                }
+            } catch (Exception e) {}
+
+            return instance;
         } else if (entity instanceof CategoryOfNews) {
             CategoryOfNews categoryOfNews = new CategoryOfNews();
             categoryOfNews.setId(assignId());
