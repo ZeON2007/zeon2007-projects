@@ -34,9 +34,11 @@
         <property name="hibernate.hbm2ddl.auto">create-drop</property>
 
         <!-- Mapping files -->
-        <mapping resource="Author.hbm.xml"/>
-        <mapping resource="CategoryOfNews.hbm.xml"/>
-        <mapping resource="BillingDetails.hbm.xml"/>
+        <mapping resource="author.hbm.xml"/>
+        <mapping resource="categoryOfNews.hbm.xml"/>
+        <mapping resource="billingDetails.hbm.xml"/>
+        <mapping resource="teacher.hbm.xml"/>
+        <mapping resource="address.hbm.xml"/>
 
     </session-factory>
 </hibernate-configuration>

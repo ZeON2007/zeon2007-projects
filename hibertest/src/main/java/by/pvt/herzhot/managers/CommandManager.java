@@ -1,11 +1,12 @@
 package by.pvt.herzhot.managers;
 
+import by.pvt.herzhot.pojos.Entity;
+import by.pvt.herzhot.pojos.associations.Address;
+import by.pvt.herzhot.pojos.associations.Teacher;
 import by.pvt.herzhot.pojos.inheritance.BankAccount;
-import by.pvt.herzhot.pojos.inheritance.BillingDetails;
 import by.pvt.herzhot.pojos.inheritance.CreditCard;
 import by.pvt.herzhot.pojos.other.Author;
 import by.pvt.herzhot.pojos.other.CategoryOfNews;
-import by.pvt.herzhot.pojos.Entity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -38,7 +39,9 @@ public enum CommandManager {
             new Author(),
             new CategoryOfNews(),
             new CreditCard(),
-            new BankAccount()
+            new BankAccount(),
+            new Address(),
+            new Teacher()
     ));
 
     public void getMenuCommands(){

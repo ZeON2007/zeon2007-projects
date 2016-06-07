@@ -1,9 +1,5 @@
 package by.pvt.herzhot.managers;
 
-import by.pvt.herzhot.pojos.inheritance.BankAccount;
-import by.pvt.herzhot.pojos.inheritance.CreditCard;
-import by.pvt.herzhot.pojos.other.Author;
-import by.pvt.herzhot.pojos.other.CategoryOfNews;
 import by.pvt.herzhot.pojos.Entity;
 import by.pvt.herzhot.utils.InputValueValidator;
 
@@ -25,7 +21,6 @@ public enum EntityManager {
 
     INSTANCE;
 
-    private Scanner scanner = new Scanner(in);
     private List<Field> allFields = new ArrayList<>();
     private Entity instance = null;
     private Class<?> clazz = null;
@@ -40,7 +35,9 @@ public enum EntityManager {
                 }
                 for (Field field : allFields) {
                     field.setAccessible(true);
-                    if (!field.getName().equals("serialVersionUID")) {
+                    if (!field.getName().equals("serialVersionUID")
+                            && !field.getName().equals("id")
+                            && !Entity.class.isAssignableFrom(field.getType())) {
                         out.println("Input " + field.getName() + ":");
                         field.set(instance, InputValueValidator.INSTANCE.validate(field.getType()));
                     }
@@ -48,6 +45,8 @@ public enum EntityManager {
             } catch (Exception e) {
                 out.println("Build entity error!");
 
+            } finally {
+                allFields.clear();
             }
             return instance;
     }
