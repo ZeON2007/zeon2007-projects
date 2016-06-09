@@ -2,7 +2,6 @@ package by.pvt.herzhot.dao;
 
 import by.pvt.herzhot.dao.exceptions.DaoException;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**

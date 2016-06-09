@@ -14,17 +14,27 @@ public enum  InputValueValidator {
 
     INSTANCE;
 
-    private Scanner scanner = new Scanner(in);
+    private Scanner scanner;
+
+    InputValueValidator() {
+        scanner = new Scanner(in);
+    }
 
     public <T> T validate(Class<T> clazz) {
         T t = null;
-        if (clazz == int.class) {
+        if (clazz == Integer.TYPE) {
+            Integer value;
             while (true) {
                 try {
-                    t = (T) Integer.valueOf(scanner.nextLine().trim());
-                    break;
+                    value = Integer.valueOf(scanner.nextLine().trim());
+                    if (value >= 0) {
+                        t = (T) value;
+                        break;
+                    } else {
+                        out.println("You input negative number! Try once again:");
+                    }
                 } catch (NumberFormatException e) {
-                    out.println("You input wrong value! Try once again:");
+                    out.println("You input not integer! Try once again:");
                 }
             }
         } else if (clazz == String.class) {
@@ -33,7 +43,7 @@ public enum  InputValueValidator {
                     t = (T) scanner.nextLine().trim();
                     break;
                 } catch (NumberFormatException e) {
-                    out.println("You input wrong value! Try once again:");
+                    out.println("You input not string! Try once again:");
                 }
             }
         }

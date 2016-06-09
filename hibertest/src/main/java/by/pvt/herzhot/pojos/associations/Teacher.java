@@ -1,7 +1,6 @@
 package by.pvt.herzhot.pojos.associations;
 
 import by.pvt.herzhot.pojos.Entity;
-import by.pvt.herzhot.pojos.test.University;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -19,20 +18,22 @@ public class Teacher implements Entity {
     private String lastName;
     private int age;
     private Address address;
-
+    private Department department;
+    private Set<Meeting> meetings = new HashSet<>();
 
     public Teacher() {
         this.firstName = "";
         this.lastName = "";
         this.age = 20;
     }
-
-    public Teacher(int id, String firstName, String lastName, int age, Address address, Set<University> universities) {
+    public Teacher(int id, String firstName, String lastName, int age, Address address, Department department, Set<Meeting> meetings) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
         this.address = address;
+        this.department = department;
+        this.meetings = meetings;
     }
 
     @Override
@@ -49,7 +50,6 @@ public class Teacher implements Entity {
         return address != null ? address.equals(teacher.address) : teacher.address == null;
 
     }
-
     @Override
     public int hashCode() {
         int result = id;
@@ -59,7 +59,6 @@ public class Teacher implements Entity {
         result = 31 * result + (address != null ? address.hashCode() : 0);
         return result;
     }
-
     @Override
     public String toString() {
         return "Teacher{" +
@@ -74,15 +73,20 @@ public class Teacher implements Entity {
     public int getId() {
         return id;
     }
-
     public void setId(int id) {
         this.id = id;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     public String getFirstName() {
         return firstName;
     }
-
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
@@ -90,7 +94,6 @@ public class Teacher implements Entity {
     public String getLastName() {
         return lastName;
     }
-
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
@@ -98,17 +101,21 @@ public class Teacher implements Entity {
     public int getAge() {
         return age;
     }
-
     public void setAge(int age) {
         this.age = age;
     }
 
-    public Address getAddress() {
-        return address;
+    public Department getDepartment() {
+        return department;
+    }
+    public void setDepartment(Department department) {
+        this.department = department;
     }
 
-    public void setAddress(Address address) {
-        this.address = address;
+    public Set<Meeting> getMeetings() {
+        return meetings;
     }
-
+    public void setMeetings(Set<Meeting> meetings) {
+        this.meetings = meetings;
+    }
 }

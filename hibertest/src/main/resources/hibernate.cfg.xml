@@ -2,6 +2,7 @@
 <!DOCTYPE hibernate-configuration PUBLIC
         "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
 <hibernate-configuration>
     <session-factory>
         <property name="hibernate.dialect">
@@ -28,17 +29,19 @@
         <property name="hibernate.c3p0.idle_test_period">3000</property>
 
         <!-- Show and print nice SQL -->
-        <property name="show_sql">true</property>
-        <property name="format_sql">true</property>
+        <!--<property name="show_sql">true</property>-->
+        <!--<property name="format_sql">true</property>-->
 
         <property name="hibernate.hbm2ddl.auto">create-drop</property>
 
         <!-- Mapping files -->
-        <mapping resource="author.hbm.xml"/>
-        <mapping resource="categoryOfNews.hbm.xml"/>
-        <mapping resource="billingDetails.hbm.xml"/>
-        <mapping resource="teacher.hbm.xml"/>
-        <mapping resource="address.hbm.xml"/>
+        <mapping resource="Author.hbm.xml"/>
+        <mapping resource="CategoryOfNews.hbm.xml"/>
+        <mapping resource="BillingDetails.hbm.xml"/>
+        <mapping resource="Teacher.hbm.xml"/>
+        <mapping resource="Address.hbm.xml"/>
+        <mapping resource="Department.hbm.xml"/>
+        <mapping resource="Meeting.hbm.xml"/>
 
     </session-factory>
 </hibernate-configuration>

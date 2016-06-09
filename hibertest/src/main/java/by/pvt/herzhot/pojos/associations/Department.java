@@ -1,4 +1,4 @@
-package by.pvt.herzhot.pojos.test;
+package by.pvt.herzhot.pojos.associations;
 
 import by.pvt.herzhot.pojos.Entity;
 
@@ -8,24 +8,22 @@ import java.util.Set;
 /**
  * @author Herzhot
  * @version 1.0
- *          06.06.2016
+ *          08.06.2016
  */
-public class City implements Entity {
+public class Department implements Entity {
 
     private static final long serialVersionUID = 1L;
     private int id;
     private String name;
-    private Set<University> universities;
+    private Set<Teacher> teachers = new HashSet<>();
 
-    public City() {
-        this.name = "";
-        this.universities = new HashSet<>();
+    public Department() {
+        name = "";
     }
-
-    public City(String name, int id, Set<University> universities) {
-        this.name = name;
+    public Department(int id, String name, Set<Teacher> teachers) {
         this.id = id;
-        this.universities = universities;
+        this.name = name;
+        this.teachers = teachers;
     }
 
     @Override
@@ -33,35 +31,32 @@ public class City implements Entity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        City city = (City) o;
+        Department that = (Department) o;
 
-        if (id != city.id) return false;
-        if (name != null ? !name.equals(city.name) : city.name != null) return false;
-        return universities != null ? universities.equals(city.universities) : city.universities == null;
+        if (id != that.id) return false;
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        return teachers != null ? teachers.equals(that.teachers) : that.teachers == null;
 
     }
-
     @Override
     public int hashCode() {
         int result = id;
         result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (universities != null ? universities.hashCode() : 0);
+        result = 31 * result + (teachers != null ? teachers.hashCode() : 0);
         return result;
     }
-
     @Override
     public String toString() {
-        return "City{" +
+        return "Department{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", universities=" + universities +
+                ", teachers=" + teachers +
                 '}';
     }
 
     public int getId() {
         return id;
     }
-
     public void setId(int id) {
         this.id = id;
     }
@@ -69,16 +64,14 @@ public class City implements Entity {
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
 
-    public Set<University> getUniversities() {
-        return universities;
+    public Set<Teacher> getTeachers() {
+        return teachers;
     }
-
-    public void setUniversities(Set<University> universities) {
-        this.universities = universities;
+    public void setTeachers(Set<Teacher> teachers) {
+        this.teachers = teachers;
     }
 }

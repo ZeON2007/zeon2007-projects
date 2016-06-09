@@ -3,9 +3,7 @@
         "-//Hibernate/Hibernate Mapping DTD//EN"
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
-<hibernate-mapping
-        package="by.pvt.herzhot.pojos.associations"
->
+<hibernate-mapping package="by.pvt.herzhot.pojos.associations">
     <class name="Address">
         <id name="id">
             <generator class="foreign">
@@ -17,7 +15,6 @@
         <one-to-one
                 name="teacher"
                 class="Teacher"
-                constrained="true"
-        />
+                constrained="true"/>
     </class>
 </hibernate-mapping>
