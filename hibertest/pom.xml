@@ -43,6 +43,7 @@
               <mainClass>by.pvt.herzhot.loader.MainLoader</mainClass>
             </manifest>
           </archive>
+          <finalName>app</finalName>
         </configuration>
         <executions>
           <execution>
@@ -56,7 +57,7 @@
         </executions>
       </plugin>
     </plugins>
-    <finalName>consoleApp</finalName>
+    <finalName>app</finalName>
   </build>
   <packaging>jar</packaging>
 
@@ -97,6 +98,11 @@
       <version>3.8.1</version>
       <scope>test</scope>
     </dependency>
+    <!--<dependency>-->
+      <!--<groupId>javax</groupId>-->
+      <!--<artifactId>javaee-api</artifactId>-->
+      <!--<version>7.0</version>-->
+    <!--</dependency>-->
   </dependencies>
 
   <properties>

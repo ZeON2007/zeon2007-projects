@@ -3,22 +3,15 @@
         "-//Hibernate/Hibernate Mapping DTD//EN"
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
-<hibernate-mapping
-    package="by.pvt.herzhot.pojos"
->
-    <class
-        name="Author"
-        table="authors"
-        schema="hibertest"
-    >
-        <id name="id" type="int" column="id">
+<hibernate-mapping package="by.pvt.herzhot.pojos.other">
+    <class name="Author">
+        <id name="id">
             <generator class="native"/>
         </id>
-        <property name="firstName"   column="first_name"/>
-        <property name="lastName"    column="last_name" />
-        <property name="email"       column="email"     />
-        <property name="password"    column="password"  />
-        <property name="accessLevel" column="access_lvl"/>
-
+        <property name="firstName"/>
+        <property name="lastName"/>
+        <property name="email"/>
+        <property name="password"/>
+        <property name="accessLevel"/>
     </class>
 </hibernate-mapping> 

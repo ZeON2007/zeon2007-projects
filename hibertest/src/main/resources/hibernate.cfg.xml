@@ -2,6 +2,7 @@
 <!DOCTYPE hibernate-configuration PUBLIC
         "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
 <hibernate-configuration>
     <session-factory>
         <property name="hibernate.dialect">
@@ -11,7 +12,7 @@
             com.mysql.jdbc.Driver
         </property>
         <property name="hibernate.connection.url">
-            jdbc:mysql://localhost:3306/
+            jdbc:mysql://localhost:3306/hibertest
         </property>
         <property name="hibernate.connection.username">
             root
@@ -31,11 +32,16 @@
         <!--<property name="show_sql">true</property>-->
         <!--<property name="format_sql">true</property>-->
 
-        <property name="hibernate.hbm2ddl.auto">update</property>
+        <property name="hibernate.hbm2ddl.auto">create-drop</property>
 
         <!-- Mapping files -->
         <mapping resource="Author.hbm.xml"/>
         <mapping resource="CategoryOfNews.hbm.xml"/>
+        <mapping resource="BillingDetails.hbm.xml"/>
+        <mapping resource="Teacher.hbm.xml"/>
+        <mapping resource="Address.hbm.xml"/>
+        <mapping resource="Department.hbm.xml"/>
+        <mapping resource="Meeting.hbm.xml"/>
 
     </session-factory>
 </hibernate-configuration>

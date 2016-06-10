@@ -1,0 +1,55 @@
+package by.pvt.herzhot.pojos.inheritance;
+
+public class CreditCard extends BillingDetails {
+
+    private static final long serialVersionUID = 1L;
+    private String cardNumber;
+    private String expMonth;
+    private String expYear;
+
+    public CreditCard() {
+        super();
+        cardNumber = "";
+        expMonth = "";
+        expYear = "";
+    }
+    public CreditCard(String owner, String cardNumber, String expMonth, String expYear) {
+        super(owner);
+        this.cardNumber = cardNumber;
+        this.expMonth = expMonth;
+        this.expYear = expYear;
+    }
+
+    @Override
+    public String toString() {
+        return "CreditCard{" +
+                "cardNumber='" + cardNumber + '\'' +
+                ", expMonth='" + expMonth + '\'' +
+                ", expYear='" + expYear + '\'' +
+                "} " + super.toString();
+    }
+
+    public String getCardNumber() {
+        return cardNumber;
+    }
+
+    public void setCardNumber(String cardNumber) {
+        this.cardNumber = cardNumber;
+    }
+
+    public String getExpMonth() {
+        return expMonth;
+    }
+
+    public void setExpMonth(String expMonth) {
+        this.expMonth = expMonth;
+    }
+
+    public String getExpYear() {
+        return expYear;
+    }
+
+    public void setExpYear(String expYear) {
+        this.expYear = expYear;
+    }
+}

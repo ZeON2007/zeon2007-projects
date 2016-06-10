@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="by.pvt.herzhot.pojos.associations">
+    <class name="Address">
+        <id name="id">
+            <generator class="foreign">
+                <param name="property">teacher</param>
+            </generator>
+        </id>
+        <property name="city"/>
+        <property name="street"/>
+        <one-to-one
+                name="teacher"
+                class="Teacher"
+                constrained="true"/>
+    </class>
+</hibernate-mapping>

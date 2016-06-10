@@ -4,13 +4,19 @@ import by.pvt.herzhot.dao.exceptions.DaoException;
 import by.pvt.herzhot.dao.impl.DaoImpl;
 import by.pvt.herzhot.managers.CommandManager;
 import by.pvt.herzhot.managers.EntityManager;
-import by.pvt.herzhot.pojos.Author;
 import by.pvt.herzhot.pojos.Entity;
+import by.pvt.herzhot.services.exceptions.ServiceException;
+import by.pvt.herzhot.services.impl.DepartmentServiceImpl;
+import by.pvt.herzhot.services.impl.MeetingServiceImpl;
+import by.pvt.herzhot.services.impl.TeacherServiceImpl;
+import by.pvt.herzhot.utils.InputValueValidator;
 
 import java.util.List;
 import java.util.Scanner;
 
-import static java.lang.System.*;
+import static by.pvt.herzhot.managers.CommandManager.*;
+import static java.lang.System.in;
+import static java.lang.System.out;
 
 /**
  * @author Herzhot
@@ -20,23 +26,22 @@ import static java.lang.System.*;
 public class MainLoader {
     public static void main(String[] args) {
 
-        CommandManager commandManager = CommandManager.INSTANCE;
+        CommandManager commandManager = INSTANCE;
         EntityManager entityManager = EntityManager.INSTANCE;
+        InputValueValidator inputValueValidator = InputValueValidator.INSTANCE;
         DaoImpl<Entity> dao = DaoImpl.getInstance();
+        TeacherServiceImpl teacherService = TeacherServiceImpl.INSTANCE;
+        MeetingServiceImpl meetingService = MeetingServiceImpl.INSTANCE;
+        DepartmentServiceImpl departmentService = DepartmentServiceImpl.INSTANCE;
         Scanner scanner = new Scanner(in);
         boolean isLaunched = true;
-        int selectedItem;
+        Integer selectedItem = 0;
 
         while (isLaunched) {
             commandManager.getMenuCommands();
-            try {
-                selectedItem = Integer.valueOf(scanner.nextLine().trim());
-            }
-            catch (NumberFormatException e) {
-                selectedItem = 0;
-            }
+            selectedItem = inputValueValidator.validate(selectedItem.TYPE);
             switch (selectedItem) {
-                case 1: {
+                case DELETE_ENTITY_COMMAND: {
                     out.println("You choose - " + selectedItem);
                     commandManager.getMenuEntities();
                     selectedItem = commandManager.getSelectedItem();
@@ -51,8 +56,7 @@ public class MainLoader {
                     }
                     break;
                 }
-
-                case 2: {
+                case FIND_ENTITY_COMMAND: {
                     out.println("You choose - " + selectedItem);
                     commandManager.getMenuEntities();
                     selectedItem = commandManager.getSelectedItem();
@@ -69,8 +73,7 @@ public class MainLoader {
                     }
                     break;
                 }
-
-                case 3: {
+                case FIND_ALL_ENTITIES_COMMAND: {
                     out.println("You choose - " + selectedItem);
                     commandManager.getMenuEntities();
                     selectedItem = commandManager.getSelectedItem();
@@ -88,24 +91,48 @@ public class MainLoader {
                     }
                     break;
                 }
-
-                case 4: {
+                case SAVE_OR_UPDATE_ENTITY_COMMAND: {
                     out.println("You choose - " + selectedItem);
                     commandManager.getMenuEntities();
                     selectedItem = commandManager.getSelectedItem();
-                    Entity entity = (Entity) commandManager.getEntities().get(selectedItem-1);
+                    Entity entity = (Entity) commandManager.getEntities().get(selectedItem - 1);
                     Entity receivedEntity = entityManager.buildEntity(entity);
                     try {
                         out.println("Operation is successful: " + dao.saveOrUpdate(receivedEntity));
-                    }
-                    catch (DaoException | NullPointerException e) {
+                    } catch (DaoException | NullPointerException e) {
                         out.println("Operation failed. DAO error!");
                     }
                     break;
                 }
-
-                case 5: {
-                    out.println("You choose - 5");
+                case SAVE_OR_UPDATE_THEACHER: {
+                    out.println("You choose - " + selectedItem);
+                    try {
+                        out.println("Operation is successful: " + teacherService.saveOrUpdate());
+                    } catch (ServiceException | NullPointerException e) {
+                        out.println("Operation failed. Service error!");
+                    }
+                    break;
+                }
+                case SAVE_OR_UPDATE_DEPARTMENT: {
+                    out.println("You choose - " + selectedItem);
+                    try {
+                        out.println("Operation is successful: " + departmentService.saveOrUpdate());
+                    } catch (ServiceException | NullPointerException e) {
+                        out.println("Operation failed. Service error!");
+                    }
+                    break;
+                }
+                case SAVE_OR_UPDATE_MEETING: {
+                    out.println("You choose - " + selectedItem);
+                    try {
+                        out.println("Operation is successful: " + meetingService.saveOrUpdate());
+                    } catch (ServiceException | NullPointerException e) {
+                        out.println("Operation failed. Service error!");
+                    }
+                    break;
+                }
+                case EXIT_COMMAND: {
+                    out.println("You choose - " + selectedItem);
                     out.println("Good-bye!");
                     isLaunched = false;
                     break;

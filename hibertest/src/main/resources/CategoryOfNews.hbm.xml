@@ -3,23 +3,17 @@
         "-//Hibernate/Hibernate Mapping DTD//EN"
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
-<hibernate-mapping
-        package="by.pvt.herzhot.pojos"
->
+<hibernate-mapping package="by.pvt.herzhot.pojos.other">
     <class
         name="CategoryOfNews"
-        table="categories"
-        schema="hibertest"
-    >
-        <id name="id" type="int" column="id" access="field">
-            <generator class="assigned"/>
+        table="categories">
+        <id name="id" access="field">
+            <generator class="native"/>
         </id>
         <property
             name="category"
-            column="category"
             not-null="true"
-            access="property"
-        />
+            access="property"/>
 
     </class>
 </hibernate-mapping>

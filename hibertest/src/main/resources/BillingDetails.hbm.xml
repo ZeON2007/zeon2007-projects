@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="by.pvt.herzhot.pojos.inheritance">
+    <class name="BillingDetails">
+        <id name="id">
+            <generator class="native"/>
+        </id>
+        <property name="owner"/>
+        <joined-subclass name="CreditCard">
+            <key column="creditcard_id"/>
+            <property name="cardNumber"/>
+            <property name="expMonth"/>
+            <property name="expYear"/>
+        </joined-subclass>
+        <joined-subclass name="BankAccount">
+            <key column="bankaccount_id"/>
+            <property name="account"/>
+            <property name="bankname"/>
+            <property name="swift"/>
+        </joined-subclass>
+    </class>
+</hibernate-mapping>
