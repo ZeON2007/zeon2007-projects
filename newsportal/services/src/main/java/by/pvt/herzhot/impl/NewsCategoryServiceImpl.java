@@ -3,23 +3,25 @@ package by.pvt.herzhot.impl;
 import by.pvt.herzhot.IService;
 import by.pvt.herzhot.dao.IDao;
 import by.pvt.herzhot.dao.impl.DaoImpl;
-import by.pvt.herzhot.pojos.impl.Author;
+import by.pvt.herzhot.pojos.impl.NewsCategory;
 
 /**
  * @author Herzhot
  * @version 1.0
  *          23.05.2016
  */
-public enum AuthorServiceImpl implements IService {
+public enum NewsCategoryServiceImpl implements IService {
 
     INSTANCE;
 
     private IDao dao;
-    private Author author;
+    private NewsCategory newsCategory;
 
-    AuthorServiceImpl() {
+    NewsCategoryServiceImpl() {
         dao = DaoImpl.getInstance();
-        author = new Author();
+        newsCategory = new NewsCategory();
     }
+
+
 
 }

@@ -1,16 +1,16 @@
 package by.pvt.herzhot.commands.news;
 
-import by.pvt.herzhot.beans.Author;
-import by.pvt.herzhot.beans.CategoryOfNews;
-import by.pvt.herzhot.beans.News;
 import by.pvt.herzhot.commands.AbstractCommand;
 import by.pvt.herzhot.constants.ConfigConstants;
 import by.pvt.herzhot.constants.MessageConstants;
 import by.pvt.herzhot.constants.Parameters;
-import by.pvt.herzhot.impl.CategoryOfNewsServiceImpl;
+import by.pvt.herzhot.impl.NewsCategoryServiceImpl;
 import by.pvt.herzhot.impl.NewsServiceImpl;
 import by.pvt.herzhot.managers.impl.ConfigManagerImpl;
 import by.pvt.herzhot.managers.impl.MessageManagerImpl;
+import by.pvt.herzhot.pojos.impl.Author;
+import by.pvt.herzhot.pojos.impl.NewsCategory;
+import by.pvt.herzhot.pojos.impl.News;
 import by.pvt.herzhot.utils.CommandsLogger;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,7 +36,7 @@ public class DeleteNewsCommand extends AbstractCommand {
 
             List<News> listNews = NewsServiceImpl.INSTANCE.getNewsByLogin(currentAuthor.getEmail());
             request.setAttribute(Parameters.NEWS_LIST, listNews);
-            List<CategoryOfNews> listCategory = CategoryOfNewsServiceImpl.INSTANCE.getAll();
+            List<NewsCategory> listCategory = NewsCategoryServiceImpl.INSTANCE.getAll();
             request.setAttribute(Parameters.CATEGORY_LIST, listCategory);
             page = ConfigManagerImpl.INSTANCE.getProperty(ConfigConstants.INDEX_PAGE_PATH);
         }

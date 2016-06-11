@@ -1,9 +1,9 @@
 package by.pvt.herzhot.commands.author;
 
-import by.pvt.herzhot.beans.Author;
 import by.pvt.herzhot.constants.ConfigConstants;
 import by.pvt.herzhot.impl.AuthorServiceImpl;
 import by.pvt.herzhot.managers.impl.ConfigManagerImpl;
+import by.pvt.herzhot.pojos.impl.Author;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

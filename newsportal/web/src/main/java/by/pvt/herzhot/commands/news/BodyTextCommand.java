@@ -1,17 +1,17 @@
 package by.pvt.herzhot.commands.news;
 
-import by.pvt.herzhot.beans.Author;
-import by.pvt.herzhot.beans.CategoryOfNews;
-import by.pvt.herzhot.beans.News;
 import by.pvt.herzhot.commands.AbstractCommand;
 import by.pvt.herzhot.constants.ConfigConstants;
 import by.pvt.herzhot.constants.MessageConstants;
 import by.pvt.herzhot.constants.Parameters;
 import by.pvt.herzhot.impl.AuthorServiceImpl;
-import by.pvt.herzhot.impl.CategoryOfNewsServiceImpl;
+import by.pvt.herzhot.impl.NewsCategoryServiceImpl;
 import by.pvt.herzhot.impl.NewsServiceImpl;
 import by.pvt.herzhot.managers.impl.ConfigManagerImpl;
 import by.pvt.herzhot.managers.impl.MessageManagerImpl;
+import by.pvt.herzhot.pojos.impl.Author;
+import by.pvt.herzhot.pojos.impl.NewsCategory;
+import by.pvt.herzhot.pojos.impl.News;
 import by.pvt.herzhot.utils.CommandsLogger;
 
 import javax.servlet.http.HttpServletRequest;
@@ -35,7 +35,7 @@ public class BodyTextCommand extends AbstractCommand {
         try {
             News news = NewsServiceImpl.INSTANCE.getEntityById(id);
             request.setAttribute(Parameters.NEWS, news);
-            List<CategoryOfNews> listCategory = CategoryOfNewsServiceImpl.INSTANCE.getAll();
+            List<NewsCategory> listCategory = NewsCategoryServiceImpl.INSTANCE.getAll();
             request.setAttribute(Parameters.CATEGORY_LIST, listCategory);
             if (currentAuthor == null) {
                 Author author = AuthorServiceImpl.INSTANCE.getEntityById(news.getAuthorId());

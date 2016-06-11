@@ -23,7 +23,7 @@ public enum TeacherServiceImpl implements IService {
 
     private IDao dao;
     private EntityManager entityManager;
-    Teacher teacher;
+    private Teacher teacher;
     private static Logger logger = Logger.getLogger(IService.class);
 
     TeacherServiceImpl() {

@@ -24,7 +24,7 @@ public enum  DepartmentServiceImpl implements IService {
 
     private IDao dao;
     private EntityManager entityManager;
-    Department department;
+    private Department department;
     private static Logger logger = Logger.getLogger(IService.class);
 
     DepartmentServiceImpl() {

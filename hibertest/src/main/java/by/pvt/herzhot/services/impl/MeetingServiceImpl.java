@@ -24,7 +24,7 @@ public enum MeetingServiceImpl implements IService {
 
     private IDao dao;
     private EntityManager entityManager;
-    Meeting meeting;
+    private Meeting meeting;
     private static Logger logger = Logger.getLogger(IService.class);
 
     MeetingServiceImpl() {

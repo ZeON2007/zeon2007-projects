@@ -16,10 +16,11 @@ import org.hibernate.service.ServiceRegistry;
  */
 public class HibernateUtil {
 
-    private static Logger logger = Logger.getLogger(HibernateUtil.class);
     private static final SessionFactory sessionFactory = buildSessionFactory();
     private static final ThreadLocal sessionThreadLocal = new ThreadLocal();
     private static final ThreadLocal transactionThreadLocal = new ThreadLocal();
+
+    private HibernateUtil(){}
 
     // Session factory initialization
     private static SessionFactory buildSessionFactory() {
@@ -33,7 +34,8 @@ public class HibernateUtil {
             return configuration.buildSessionFactory(serviceRegistry);
         }
         catch (HibernateException e) {
-            logger.error("Configuration problem: " + e.getMessage());
+            LoggingUtil.INSTANCE.logError(HibernateUtil.class,
+                    "Configuration problem: " + e.getMessage());
             throw new RuntimeException(e);
         }
     }
@@ -51,7 +53,8 @@ public class HibernateUtil {
                 sessionThreadLocal.set(session);
             }
         } catch (HibernateException e) {
-            logger.error("Get current session error: " + e.getMessage());
+            LoggingUtil.INSTANCE.logError(HibernateUtil.class,
+                    "Get current session error: " + e.getMessage());
         }
         return session;
     }
@@ -66,7 +69,8 @@ public class HibernateUtil {
             if (session != null)
                 session.close();
         } catch (HibernateException e) {
-            logger.error("Close current session error: " + e.getMessage());
+            LoggingUtil.INSTANCE.logError(HibernateUtil.class,
+                    "Close current session error: " + e.getMessage());
         }
     }
 
@@ -81,7 +85,8 @@ public class HibernateUtil {
                 transactionThreadLocal.set(tx);
             }
         } catch (HibernateException e) {
-            logger.error("Begin transaction error: " + e.getMessage());
+            LoggingUtil.INSTANCE.logError(HibernateUtil.class,
+                    "Begin transaction error: " + e.getMessage());
         }
     }
 
@@ -97,7 +102,8 @@ public class HibernateUtil {
             transactionThreadLocal.set(null);
         } catch (HibernateException e) {
             rollbackTransaction();
-            logger.error("Commit transaction error: " + e.getMessage());
+            LoggingUtil.INSTANCE.logError(HibernateUtil.class,
+                    "Commit transaction error: " + e.getMessage());
         }
     }
 
@@ -112,7 +118,8 @@ public class HibernateUtil {
                 tx.rollback();
             }
         } catch (HibernateException e) {
-            logger.error("Rollback transaction error: " + e.getMessage());
+            LoggingUtil.INSTANCE.logError(HibernateUtil.class,
+                    "Rollback transaction error: " + e.getMessage());
         } finally {
             closeSession();
         }

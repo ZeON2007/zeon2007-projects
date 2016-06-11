@@ -1,21 +1,18 @@
 package by.pvt.herzhot.dao;
 
-import by.pvt.herzhot.beans.Entity;
+import by.pvt.herzhot.dao.exceptions.DaoException;
 
-import java.sql.SQLException;
 import java.util.List;
 
 /**
  * @author Herzhot
  * @version 1.0
- *          08.05.2016
+ *          30.05.2016
  */
-public interface IDao <T extends Entity> {
+public interface IDao <T> {
 
-    List<T> getAll() throws SQLException;
-    int createEntity(T entity) throws SQLException;
-    int getNextId() throws SQLException;
-    T getEntityById(int id) throws SQLException;
-    int deleteEntity(int id) throws SQLException;
-
+    T find(T t, int id) throws DaoException;
+    List<T> findAll(T t) throws DaoException;
+    boolean delete(T t, int id) throws DaoException;
+    boolean saveOrUpdate(T t) throws DaoException;
 }
