@@ -1,0 +1,82 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 85%;
+    margin-left: 2em;
+    margin-right: 2em;
+    width: 900px;
+}
+h1 {     
+    font-size: 140%;
+    color: teal;
+    margin-bottom: .5em;    
+}
+h2 {     
+    font-size: 100%;
+    color: teal;
+    margin-bottom: .5em;    
+}
+br {
+    clear: both;
+}
+.pad_top {
+    padding-top: 1em;
+}
+label {
+    float: left;
+    width: 7em;
+    margin-bottom: 0.5em;
+    font-weight: bold;
+}
+input[type="text"], input[type="email"] {
+    width: 15em;
+    margin-left: 0.5em;    
+    margin-bottom: 0.5em;
+}
+div#tableContainer {
+    display: table;
+}
+div.tableRow {
+    display: table-row;
+    width: 800px;
+}
+nav {
+    display: table-cell;
+    background-color: darkkhaki;
+    width: 200px;
+    padding: 10px;
+}
+section {
+    display: table-cell;
+    background-color: #efe5d0;
+    width: 600px;
+    padding: 10px;
+}
+ul#menu {
+    margin-left: 0;
+
+}
+ul#lineNews {
+    margin-left: 0;
+    list-style: none;
+}
+li#menuItem {
+    margin-bottom: 1em;
+    font-size: 18px;
+    font-weight: bold;
+}
+li#newsName {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    color: teal;
+
+}
+li#description {
+    font-size: 14px;
+}
+li#date {
+    font-size: 10px;
+    margin-bottom: 1px;
+}
+
+
