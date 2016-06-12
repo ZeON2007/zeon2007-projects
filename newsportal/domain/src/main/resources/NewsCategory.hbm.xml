@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="by.pvt.herzhot.pojos.impl">
+    <class name="NewsCategory">
+        <id name="id">
+            <generator class="native"/>
+        </id>
+        <property name="category"/>
+        <set
+            name="newses"
+            inverse="true"
+            fetch="join">
+            <key column="category_id" not-null="true"/>
+            <one-to-many class="News"/>
+        </set>
+    </class>
+</hibernate-mapping>

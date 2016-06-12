@@ -11,8 +11,8 @@ import java.util.List;
  */
 public interface IDao <T> {
 
-    T find(T t, int id) throws DaoException;
-    List<T> findAll(T t) throws DaoException;
-    boolean delete(T t, int id) throws DaoException;
+    T find(int id) throws DaoException;
+    List<T> findAll() throws DaoException;
+    boolean delete(int id) throws DaoException;
     boolean saveOrUpdate(T t) throws DaoException;
 }

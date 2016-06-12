@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="by.pvt.herzhot.pojos.impl">
+    <class name="News">
+        <id name="id">
+            <generator class="native"/>
+        </id>
+        <property name="date"/>
+        <property name="name"/>
+        <property name="description"/>
+        <property name="mainText"/>
+        <many-to-one
+            name="author"
+            class="Author"/>
+        <many-to-one
+                name="newsCategory"
+                class="NewsCategory"/>
+    </class>
+</hibernate-mapping>

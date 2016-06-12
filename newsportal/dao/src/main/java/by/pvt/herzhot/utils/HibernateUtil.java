@@ -1,5 +1,6 @@
 package by.pvt.herzhot.utils;
 
+import by.pvt.herzhot.dao.exceptions.DaoException;
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -77,7 +78,7 @@ public class HibernateUtil {
     /**
      * Begin Hibernate transaction
      */
-    public static void beginTransaction() {
+    public static void beginTransaction() throws DaoException {
         Transaction tx = (Transaction) transactionThreadLocal.get();
         try {
             if (tx == null) {
@@ -87,13 +88,14 @@ public class HibernateUtil {
         } catch (HibernateException e) {
             LoggingUtil.INSTANCE.logError(HibernateUtil.class,
                     "Begin transaction error: " + e.getMessage());
+            throw new DaoException();
         }
     }
 
     /**
      * Commit Hibernate transaction
      */
-    public static void commitTransaction() {
+    public static void commitTransaction() throws DaoException {
         Transaction tx = (Transaction) transactionThreadLocal.get();
         try {
             if (tx != null && !tx.wasCommitted() && !tx.wasRolledBack()) {
@@ -104,6 +106,7 @@ public class HibernateUtil {
             rollbackTransaction();
             LoggingUtil.INSTANCE.logError(HibernateUtil.class,
                     "Commit transaction error: " + e.getMessage());
+            throw new DaoException();
         }
     }
 

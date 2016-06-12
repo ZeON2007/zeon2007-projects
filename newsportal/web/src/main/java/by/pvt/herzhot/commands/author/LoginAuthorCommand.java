@@ -2,6 +2,7 @@ package by.pvt.herzhot.commands.author;
 
 import by.pvt.herzhot.commands.AbstractCommand;
 import by.pvt.herzhot.constants.*;
+import by.pvt.herzhot.exceptions.ServiceException;
 import by.pvt.herzhot.impl.AuthorServiceImpl;
 import by.pvt.herzhot.impl.NewsCategoryServiceImpl;
 import by.pvt.herzhot.impl.NewsServiceImpl;
@@ -10,11 +11,9 @@ import by.pvt.herzhot.managers.impl.MessageManagerImpl;
 import by.pvt.herzhot.pojos.impl.Author;
 import by.pvt.herzhot.pojos.impl.NewsCategory;
 import by.pvt.herzhot.pojos.impl.News;
-import by.pvt.herzhot.utils.CommandsLogger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -24,6 +23,12 @@ import java.util.List;
  */
 public class LoginAuthorCommand extends AbstractCommand {
 
+    private AuthorServiceImpl authorService = AuthorServiceImpl.INSTANCE;
+    private NewsServiceImpl newsService = NewsServiceImpl.INSTANCE;
+    private NewsCategoryServiceImpl newsCategoryService = NewsCategoryServiceImpl.INSTANCE;
+    private MessageManagerImpl messageManager = MessageManagerImpl.INSTANCE;
+    private ConfigManagerImpl configManager = ConfigManagerImpl.INSTANCE;
+
     @Override
     public String execute(HttpServletRequest request) {
         String page;
@@ -32,8 +37,8 @@ public class LoginAuthorCommand extends AbstractCommand {
         String login = request.getParameter(Parameters.EMAIL);
         String password = request.getParameter(Parameters.PASSWORD);
         try {
-            if (AuthorServiceImpl.INSTANCE.isAuthorized(login, password)) {
-                Author author = AuthorServiceImpl.INSTANCE.getAuthorByLogin(login);
+            if (authorService.checkAuthentication(login, password)) {
+                Author author = authorService.find(login);
                 if (AccessLevels.AUTHOR == author.getAccessLevel()) {
                     userType = UserType.AUTHOR;
                 } else {
@@ -43,25 +48,24 @@ public class LoginAuthorCommand extends AbstractCommand {
                 session.setAttribute(Parameters.AUTHOR, author);
 
                 if (UserType.USER.equals(userType)) {
-                    page = ConfigManagerImpl.INSTANCE.getProperty(ConfigConstants.INDEX_PAGE_PATH);
+                    page = configManager.getProperty(ConfigConstants.INDEX_PAGE_PATH);
                 } else {
-                    List<News> listNews = NewsServiceImpl.INSTANCE.getNewsByLogin(login);
+                    List<News> listNews = newsService.getNewsByLogin(login);
                     request.setAttribute(Parameters.NEWS_LIST, listNews);
-                    List<NewsCategory> listCategory = NewsCategoryServiceImpl.INSTANCE.getAll();
+                    List<NewsCategory> listCategory = newsCategoryService.findAll();
                     request.setAttribute(Parameters.CATEGORY_LIST, listCategory);
-                    page = ConfigManagerImpl.INSTANCE.getProperty(ConfigConstants.INDEX_PAGE_PATH);
+                    page = configManager.getProperty(ConfigConstants.INDEX_PAGE_PATH);
                 }
             } else {
                 request.setAttribute(Parameters.ERROR_LOGIN_OR_PASSWORD,
-                        MessageManagerImpl.INSTANCE.getProperty(MessageConstants.WRONG_LOGIN_OR_PASSWORD));
-                page = ConfigManagerImpl.INSTANCE.getProperty(ConfigConstants.LOGIN_PAGE_PATH);
+                        messageManager.getProperty(MessageConstants.WRONG_LOGIN_OR_PASSWORD));
+                page = configManager.getProperty(ConfigConstants.LOGIN_PAGE_PATH);
             }
         }
-        catch (SQLException e) {
+        catch (ServiceException e) {
             request.setAttribute(Parameters.ERROR_DATABASE,
-                    MessageManagerImpl.INSTANCE.getProperty(MessageConstants.ERROR_DATABASE));
-            page = ConfigManagerImpl.INSTANCE.getProperty(ConfigConstants.ERROR_PAGE_PATH);
-            CommandsLogger.INSTANCE.logError(getClass(), e.getMessage());
+                    messageManager.getProperty(MessageConstants.ERROR_DATABASE));
+            page = configManager.getProperty(ConfigConstants.ERROR_PAGE_PATH);
         }
         return page;
     }

@@ -4,19 +4,18 @@ import by.pvt.herzhot.commands.AbstractCommand;
 import by.pvt.herzhot.constants.ConfigConstants;
 import by.pvt.herzhot.constants.MessageConstants;
 import by.pvt.herzhot.constants.Parameters;
+import by.pvt.herzhot.exceptions.ServiceException;
 import by.pvt.herzhot.impl.NewsCategoryServiceImpl;
 import by.pvt.herzhot.impl.NewsServiceImpl;
 import by.pvt.herzhot.managers.impl.ConfigManagerImpl;
 import by.pvt.herzhot.managers.impl.MessageManagerImpl;
 import by.pvt.herzhot.pojos.impl.Author;
-import by.pvt.herzhot.pojos.impl.NewsCategory;
 import by.pvt.herzhot.pojos.impl.News;
-import by.pvt.herzhot.utils.CommandsLogger;
+import by.pvt.herzhot.pojos.impl.NewsCategory;
+import by.pvt.herzhot.utils.LoggingUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -27,6 +26,10 @@ import java.util.List;
  */
 public class AddNewsCommand extends AbstractCommand {
 
+    private LoggingUtil logger = LoggingUtil.INSTANCE;
+    private MessageManagerImpl messageManager = MessageManagerImpl.INSTANCE;
+    private ConfigManagerImpl configManager = ConfigManagerImpl.INSTANCE;
+
     @Override
     public String execute(HttpServletRequest request) {
         String page = null;
@@ -34,31 +37,29 @@ public class AddNewsCommand extends AbstractCommand {
         try {
             Author currentAuthor = (Author) session.getAttribute(Parameters.AUTHOR);
             News news = new News();
-            news.setCategoryId(Integer.valueOf(request.getParameter(Parameters.CATEGORY_ID)));
-            news.setAuthorId(currentAuthor.getId());
-            Timestamp ts = new Timestamp(new Date().getTime());
-//            news.setDate(request.getParameter(Parameters.NEWS_DATE));
-            news.setDate(new Timestamp(new Date().getTime()).toString());
+            int categoryId = Integer.valueOf(request.getParameter(Parameters.CATEGORY_ID));
+            NewsCategory newsCategory = NewsCategoryServiceImpl.INSTANCE.find(categoryId);
+            news.setDate(new Date());
+            news.setNewsCategory(newsCategory);
+            news.setAuthor(currentAuthor);
             news.setName(request.getParameter(Parameters.NEWS_NAME));
             news.setDescription(request.getParameter(Parameters.NEWS_DESCRIPTION));
             news.setMainText(request.getParameter(Parameters.NEWS_BODYTEXT));
-            NewsServiceImpl.INSTANCE.createEntity(news);
+            NewsServiceImpl.INSTANCE.saveOrUpdate(news);
 
             List<News> listNews = NewsServiceImpl.INSTANCE.getNewsByLogin(currentAuthor.getEmail());
             request.setAttribute(Parameters.NEWS_LIST, listNews);
-            List<NewsCategory> listCategory = NewsCategoryServiceImpl.INSTANCE.getAll();
+            List<NewsCategory> listCategory = NewsCategoryServiceImpl.INSTANCE.findAll();
             request.setAttribute(Parameters.CATEGORY_LIST, listCategory);
-            page = ConfigManagerImpl.INSTANCE.getProperty(ConfigConstants.INDEX_PAGE_PATH);
+            page = configManager.getProperty(ConfigConstants.INDEX_PAGE_PATH);
         }
-        catch (SQLException e) {
-            CommandsLogger.INSTANCE.logError(getClass(), e.getMessage());
-            page = ConfigManagerImpl.INSTANCE.getProperty(ConfigConstants.ERROR_PAGE_PATH);
+        catch (ServiceException e) {
+            page = configManager.getProperty(ConfigConstants.ERROR_PAGE_PATH);
             request.setAttribute(Parameters.ERROR_DATABASE,
-                    MessageManagerImpl.INSTANCE.getProperty(MessageConstants.ERROR_DATABASE));
+                    messageManager.getProperty(MessageConstants.ERROR_DATABASE));
         }
         catch (NumberFormatException e) {
-            CommandsLogger.INSTANCE.logError(getClass(), e.getMessage());
-
+            logger.logError(getClass(), e.getMessage());
         }
         return page;
 
