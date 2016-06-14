@@ -3,9 +3,12 @@ package by.pvt.herzhot.dao;
 import by.pvt.herzhot.dao.exceptions.DaoException;
 import by.pvt.herzhot.utils.LoggingUtil;
 import org.hibernate.HibernateException;
+import org.hibernate.criterion.Projection;
+import org.hibernate.criterion.Projections;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
+import java.util.Map;
 
 import static by.pvt.herzhot.utils.HibernateUtil.*;
 
@@ -40,6 +43,22 @@ public abstract class AbstractDao<T> implements IDao<T> {
         }
         return entityList;
     }
+
+    @Override
+    public int count() throws DaoException {
+        int count;
+        try {
+            count = (int)(long) currentSession()
+                    .createCriteria(getPersistentClass())
+                    .setProjection(Projections.rowCount())
+                    .uniqueResult();
+        } catch (HibernateException e) {
+            logger.logError(getClass(), "Entities counting error: " + e.getMessage());
+            throw new DaoException();
+        }
+        return count;
+    }
+
     @Override
     public boolean delete(int id) throws DaoException {
         T entity;

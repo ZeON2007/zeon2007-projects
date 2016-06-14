@@ -1,8 +1,8 @@
-package by.pvt.herzhot.commands.news;
+package by.pvt.herzhot.commands.impl.news;
 
 import by.pvt.herzhot.commands.AbstractCommand;
 import by.pvt.herzhot.constants.ConfigConstants;
-import by.pvt.herzhot.managers.impl.ConfigManagerImpl;
+import by.pvt.herzhot.managers.ConfigManagerImpl;
 
 import javax.servlet.http.HttpServletRequest;
 

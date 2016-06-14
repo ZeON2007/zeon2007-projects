@@ -51,7 +51,6 @@ public class Author implements IEntity {
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (password != null ? password.hashCode() : 0);
         result = 31 * result + accessLevel;
-        result = 31 * result + (newses != null ? newses.hashCode() : 0);
         return result;
     }
     @Override

@@ -15,5 +15,6 @@ public interface IService<T> {
     List<T> findAll() throws ServiceException;
     boolean delete(int id) throws ServiceException;
     boolean saveOrUpdate(T t) throws ServiceException;
+    int count() throws ServiceException;
 
 }

@@ -44,9 +44,7 @@ public class News implements IEntity {
     }
     @Override
     public int hashCode() {
-        int result = newsCategory != null ? newsCategory.hashCode() : 0;
-        result = 31 * result + (author != null ? author.hashCode() : 0);
-        result = 31 * result + (date != null ? date.hashCode() : 0);
+        int result = date != null ? date.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + (mainText != null ? mainText.hashCode() : 0);

@@ -65,6 +65,7 @@ public enum AuthorServiceImpl implements IService<Author> {
         return author;
     }
 
+
     @Override
     public List findAll() throws ServiceException {
         return null;
@@ -77,6 +78,19 @@ public enum AuthorServiceImpl implements IService<Author> {
 
     @Override
     public boolean saveOrUpdate(Author author) throws ServiceException {
-        return false;
+        try {
+            beginTransaction();
+            dao.saveOrUpdate(author);
+            commitTransaction();
+        } catch (DaoException e) {
+            rollbackTransaction();
+            throw new ServiceException();
+        }
+        return true;
+    }
+
+    @Override
+    public int count() throws ServiceException {
+        return 0;
     }
 }

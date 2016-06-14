@@ -1,8 +1,7 @@
-package by.pvt.herzhot.commands.author;
+package by.pvt.herzhot.commands.impl.author;
 
 import by.pvt.herzhot.constants.ConfigConstants;
-import by.pvt.herzhot.impl.AuthorServiceImpl;
-import by.pvt.herzhot.managers.impl.ConfigManagerImpl;
+import by.pvt.herzhot.managers.ConfigManagerImpl;
 import by.pvt.herzhot.pojos.impl.Author;
 import org.junit.After;
 import org.junit.Before;
@@ -60,24 +59,4 @@ public class LoginAuthorCommandTest extends Mockito {
         verify(request, atLeastOnce()).getParameter("email");
         verify(request, atLeastOnce()).getParameter("password");
     }
-
-    @Test
-    public void processingWithValidLoginAndPassword() throws Exception {
-        when(request.getParameter("email")).thenReturn("Test");
-        when(request.getParameter("password")).thenReturn("Test");
-        when(request.getSession()).thenReturn(session);
-
-        currentId = AuthorServiceImpl.INSTANCE.getNextId();
-        expectedAuthor = new Author(currentId, "Test", "Test", "Test", "Test", 1);
-        AuthorServiceImpl.INSTANCE.createEntity(expectedAuthor);
-        expectedPage = ConfigManagerImpl.INSTANCE.getProperty(ConfigConstants.INDEX_PAGE_PATH);
-        actualPage = command.execute(request);
-        AuthorServiceImpl.INSTANCE.deleteEntity(currentId);
-
-        assertEquals(expectedPage, actualPage);
-        verify(request, atLeastOnce()).getParameter("email");
-        verify(request, atLeastOnce()).getParameter("password");
-
-    }
-
 }

@@ -1,10 +1,10 @@
 package by.pvt.herzhot.commands.factory;
 
 import by.pvt.herzhot.commands.ICommand;
-import by.pvt.herzhot.commands.author.LogOutAuthorCommand;
-import by.pvt.herzhot.commands.author.LoginAuthorCommand;
-import by.pvt.herzhot.commands.author.LoginPageCommand;
-import by.pvt.herzhot.commands.news.*;
+import by.pvt.herzhot.commands.impl.author.LogOutAuthorCommand;
+import by.pvt.herzhot.commands.impl.author.LoginAuthorCommand;
+import by.pvt.herzhot.commands.impl.author.LoginPageCommand;
+import by.pvt.herzhot.commands.impl.news.*;
 
 /**
  * @author Herzhot
@@ -13,6 +13,7 @@ import by.pvt.herzhot.commands.news.*;
  */
 public enum CommandType {
 
+    UPDATEPAGE(0),
     LOGIN(0), LOGOUT(0),
     GOTOMAINPAGE(0), GOTOCATEGORYPAGE(0), GOTOBODYTEXTPAGE(0), GOTOLOGINPAGE(0), GOTOADDNEWSPAGE(1),
     ADDNEWS(1), DELETENEWS(1);

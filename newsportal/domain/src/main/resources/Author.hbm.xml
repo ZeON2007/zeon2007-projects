@@ -15,9 +15,8 @@
         <property name="accessLevel"/>
         <set
             name="newses"
-            inverse="true"
-            fetch="join">
-            <key column="author_id" not-null="true"/>
+            inverse="true">
+            <key column="author" not-null="true"/>
             <one-to-many class="News"/>
         </set>
     </class>

@@ -8,6 +8,7 @@ import by.pvt.herzhot.pojos.impl.Author;
 import by.pvt.herzhot.pojos.impl.News;
 
 import java.util.List;
+import java.util.Map;
 
 import static by.pvt.herzhot.utils.HibernateUtil.*;
 
@@ -21,18 +22,17 @@ public enum NewsServiceImpl implements IService<News> {
     INSTANCE;
 
     private NewsDaoImpl dao;
-    private News news;
 
     NewsServiceImpl() {
         dao = NewsDaoImpl.getInstance();
-        news = new News();
     }
 
-    public List<News> getNewsByLogin(String login) throws ServiceException {
+    public List<News> getNewsByLogin(String login,
+                Map<String, Integer> paginationParams) throws ServiceException {
         List<News> newses;
         try {
             beginTransaction();
-            newses = dao.getNewsByLogin(login);
+            newses = dao.getNewsByLogin(login, paginationParams);
             commitTransaction();
         } catch (DaoException e) {
             rollbackTransaction();
@@ -40,11 +40,25 @@ public enum NewsServiceImpl implements IService<News> {
         }
         return newses;
     }
-    public List<News> getNewsInCategory(int id) throws ServiceException {
+    public int countNewsByLogin(String login) throws ServiceException {
+        int count;
+        try {
+            beginTransaction();
+            count = dao.countNewsByLogin(login);
+            commitTransaction();
+        } catch (DaoException e) {
+            rollbackTransaction();
+            throw new ServiceException();
+        }
+        return count;
+    }
+
+    public List<News> getNewsInCategory(int id,
+                Map<String, Integer> paginationParams) throws ServiceException {
         List<News> newses;
         try {
             beginTransaction();
-            newses = dao.getNewsInCategory(id);
+            newses = dao.getNewsInCategory(id, paginationParams);
             commitTransaction();
         } catch (DaoException e) {
             rollbackTransaction();
@@ -52,32 +66,111 @@ public enum NewsServiceImpl implements IService<News> {
         }
         return newses;
     }
-    public List<News> getNewsInCategoryByLogin(int id, String login) throws ServiceException {
+    public int countNewsInCategory(int id) throws ServiceException {
+        int count;
+        try {
+            beginTransaction();
+            count = dao.countNewsInCategory(id);
+            commitTransaction();
+        } catch (DaoException e) {
+            rollbackTransaction();
+            throw new ServiceException();
+        }
+        return count;
+    }
+
+    public List<News> getNewsInCategoryByLogin(int id, String login,
+                Map<String, Integer> paginationParams) throws ServiceException {
         List<News> newses;
         try {
             beginTransaction();
-            newses = dao.getNewsInCategoryByLogin(id, login);
+            newses = dao.getNewsInCategoryByLogin(id, login, paginationParams);
             commitTransaction();
         } catch (DaoException e) {
             rollbackTransaction();
             throw new ServiceException();
         }
         return newses;
+    }
+    public int countNewsInCategoryByLogin(int id, String login) throws ServiceException {
+        int count;
+        try {
+            beginTransaction();
+            count = dao.countNewsInCategoryByLogin(id, login);
+            commitTransaction();
+        } catch (DaoException e) {
+            rollbackTransaction();
+            throw new ServiceException();
+        }
+        return count;
     }
 
     @Override
     public News find(int id) throws ServiceException {
-        return null;
+        News news;
+        try {
+            beginTransaction();
+            news = dao.find(id);
+            commitTransaction();
+        } catch (DaoException e) {
+            rollbackTransaction();
+            throw new ServiceException();
+        }
+        return news;
+    }
+    @Override
+    public int count() throws ServiceException {
+        int count;
+        try {
+            beginTransaction();
+            count = dao.count();
+            commitTransaction();
+        } catch (DaoException e) {
+            rollbackTransaction();
+            throw new ServiceException();
+        }
+        return count;
     }
 
     @Override
-    public List findAll() throws ServiceException {
-        return null;
+    public List<News> findAll() throws ServiceException {
+        List<News> newses;
+        try {
+            beginTransaction();
+            newses = dao.findAll();
+            commitTransaction();
+        } catch (DaoException e) {
+            rollbackTransaction();
+            throw new ServiceException();
+        }
+        return newses;
+    }
+
+    public List<News> findAll(Map<String, Integer> paginationParams) throws ServiceException {
+        List<News> newses;
+        try {
+            beginTransaction();
+            newses = dao.findAll(paginationParams);
+            commitTransaction();
+        } catch (DaoException e) {
+            rollbackTransaction();
+            throw new ServiceException();
+        }
+        return newses;
     }
 
     @Override
     public boolean delete(int id) throws ServiceException {
-        return false;
+        boolean result;
+        try {
+            beginTransaction();
+            result = dao.delete(id);
+            commitTransaction();
+        } catch (DaoException e) {
+            rollbackTransaction();
+            throw new ServiceException();
+        }
+        return result;
     }
 
     @Override
@@ -91,6 +184,6 @@ public enum NewsServiceImpl implements IService<News> {
             rollbackTransaction();
             throw new ServiceException();
         }
-        return true;
+        return result;
     }
 }

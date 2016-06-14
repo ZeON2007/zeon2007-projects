@@ -1,4 +1,4 @@
-package by.pvt.herzhot.commands.news;
+package by.pvt.herzhot.commands.impl.news;
 
 import by.pvt.herzhot.commands.AbstractCommand;
 import by.pvt.herzhot.constants.ConfigConstants;
@@ -7,8 +7,8 @@ import by.pvt.herzhot.constants.Parameters;
 import by.pvt.herzhot.exceptions.ServiceException;
 import by.pvt.herzhot.impl.NewsCategoryServiceImpl;
 import by.pvt.herzhot.impl.NewsServiceImpl;
-import by.pvt.herzhot.managers.impl.ConfigManagerImpl;
-import by.pvt.herzhot.managers.impl.MessageManagerImpl;
+import by.pvt.herzhot.managers.ConfigManagerImpl;
+import by.pvt.herzhot.managers.MessageManagerImpl;
 import by.pvt.herzhot.pojos.impl.Author;
 import by.pvt.herzhot.pojos.impl.News;
 import by.pvt.herzhot.pojos.impl.NewsCategory;
@@ -26,10 +26,20 @@ public class BodyTextCommand extends AbstractCommand {
 
     @Override
     public String execute(HttpServletRequest request) {
-        String page;
-        int id = Integer.valueOf(request.getParameter(Parameters.SELECTED_NEWS_ID));
+
         HttpSession session = request.getSession();
+        String page;
+        String selectedNewsId = request.getParameter(Parameters.SELECTED_NEWS_ID);
         Author currentAuthor = (Author) session.getAttribute(Parameters.AUTHOR);
+
+        int id = 0;
+        if (selectedNewsId != null) {
+            id = Integer.valueOf(request.getParameter(Parameters.SELECTED_NEWS_ID));
+            session.setAttribute(Parameters.SELECTED_NEWS_ID, selectedNewsId);
+        } else if (session.getAttribute(Parameters.SELECTED_NEWS_ID) != null) {
+            id = Integer.valueOf(session.getAttribute(Parameters.SELECTED_NEWS_ID).toString());
+        }
+
         try {
             News news = NewsServiceImpl.INSTANCE.find(id);
             request.setAttribute(Parameters.NEWS, news);
@@ -45,7 +55,8 @@ public class BodyTextCommand extends AbstractCommand {
         }
         catch (ServiceException e) {
             page = ConfigManagerImpl.INSTANCE.getProperty(ConfigConstants.ERROR_PAGE_PATH);
-            request.setAttribute(Parameters.ERROR_DATABASE, MessageManagerImpl.INSTANCE.getProperty(MessageConstants.ERROR_DATABASE));
+            request.setAttribute(Parameters.ERROR_DATABASE,
+                    MessageManagerImpl.INSTANCE.getProperty(MessageConstants.ERROR_DATABASE, request));
         }
         return page;
     }

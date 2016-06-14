@@ -34,9 +34,7 @@ public class NewsCategory implements IEntity {
     }
     @Override
     public int hashCode() {
-        int result = category != null ? category.hashCode() : 0;
-        result = 31 * result + (newses != null ? newses.hashCode() : 0);
-        return result;
+        return category != null ? category.hashCode() : 0;
     }
     @Override
     public String toString() {

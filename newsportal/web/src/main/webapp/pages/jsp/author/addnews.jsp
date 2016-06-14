@@ -20,9 +20,6 @@
             <label class="pad_top">Название:</label>
             <input type="text" name="name" value="" required><br>
 
-            <label class="pad_top">Дата:</label>
-            <input type="text" name="date" value="" required><br>
-
             <label class="pad_top">Краткое описание:</label>
             <input type="text" name="description" value="" required><br>
 

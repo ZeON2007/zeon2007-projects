@@ -10,6 +10,20 @@
     </head>
     <body>
     <h1>НОВОСТНОЙ ПОРТАЛ</h1>
+    <p>
+        <a href="<c:url value="controller">
+                        <c:param name="command" value="updatePage" />
+                        <c:param name="language" value="ru" />
+                     </c:url>" >
+            RU
+        </a>
+        <a href="<c:url value="controller">
+                        <c:param name="command" value="updatePage" />
+                        <c:param name="language" value="en" />
+                     </c:url>" >
+            EN
+        </a>
+    </p>
     <h2>
         <c:if test="${userType == null}">
             <a href="<c:url value="controller">

@@ -3,6 +3,7 @@ package by.pvt.herzhot.dao;
 import by.pvt.herzhot.dao.exceptions.DaoException;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Herzhot
@@ -15,4 +16,5 @@ public interface IDao <T> {
     List<T> findAll() throws DaoException;
     boolean delete(int id) throws DaoException;
     boolean saveOrUpdate(T t) throws DaoException;
+    int count() throws DaoException;
 }

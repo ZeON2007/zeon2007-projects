@@ -43,6 +43,7 @@ public enum NewsCategoryServiceImpl implements IService<NewsCategory> {
         return newsCategory;
     }
 
+
     @Override
     public List<NewsCategory> findAll() throws ServiceException {
         List<NewsCategory> newsCategories;
@@ -64,6 +65,19 @@ public enum NewsCategoryServiceImpl implements IService<NewsCategory> {
 
     @Override
     public boolean saveOrUpdate(NewsCategory newsCategory) throws ServiceException {
-        return false;
+        try {
+            beginTransaction();
+            dao.saveOrUpdate(newsCategory);
+            commitTransaction();
+        } catch (DaoException e) {
+            rollbackTransaction();
+            throw new ServiceException();
+        }
+        return true;
+    }
+
+    @Override
+    public int count() throws ServiceException {
+        return 0;
     }
 }

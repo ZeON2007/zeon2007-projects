@@ -1,4 +1,4 @@
-package by.pvt.herzhot.commands.news;
+package by.pvt.herzhot.commands.impl.news;
 
 import org.junit.After;
 import org.junit.Before;

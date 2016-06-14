@@ -1,4 +1,4 @@
-package by.pvt.herzhot.commands.news;
+package by.pvt.herzhot.commands.impl.news;
 
 import by.pvt.herzhot.commands.AbstractCommand;
 import by.pvt.herzhot.constants.ConfigConstants;
@@ -7,11 +7,12 @@ import by.pvt.herzhot.constants.Parameters;
 import by.pvt.herzhot.exceptions.ServiceException;
 import by.pvt.herzhot.impl.NewsCategoryServiceImpl;
 import by.pvt.herzhot.impl.NewsServiceImpl;
-import by.pvt.herzhot.managers.impl.ConfigManagerImpl;
-import by.pvt.herzhot.managers.impl.MessageManagerImpl;
+import by.pvt.herzhot.managers.ConfigManagerImpl;
+import by.pvt.herzhot.managers.MessageManagerImpl;
 import by.pvt.herzhot.pojos.impl.Author;
 import by.pvt.herzhot.pojos.impl.News;
 import by.pvt.herzhot.pojos.impl.NewsCategory;
+import by.pvt.herzhot.util.Paginator;
 import by.pvt.herzhot.utils.LoggingUtil;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,10 +30,12 @@ public class AddNewsCommand extends AbstractCommand {
     private LoggingUtil logger = LoggingUtil.INSTANCE;
     private MessageManagerImpl messageManager = MessageManagerImpl.INSTANCE;
     private ConfigManagerImpl configManager = ConfigManagerImpl.INSTANCE;
+    private NewsServiceImpl newsService = NewsServiceImpl.INSTANCE;
+    private Paginator paginator = Paginator.INSTANCE;
 
     @Override
     public String execute(HttpServletRequest request) {
-        String page = null;
+        String page;
         HttpSession session = request.getSession();
         try {
             Author currentAuthor = (Author) session.getAttribute(Parameters.AUTHOR);
@@ -45,9 +48,12 @@ public class AddNewsCommand extends AbstractCommand {
             news.setName(request.getParameter(Parameters.NEWS_NAME));
             news.setDescription(request.getParameter(Parameters.NEWS_DESCRIPTION));
             news.setMainText(request.getParameter(Parameters.NEWS_BODYTEXT));
-            NewsServiceImpl.INSTANCE.saveOrUpdate(news);
+            newsService.saveOrUpdate(news);
 
-            List<News> listNews = NewsServiceImpl.INSTANCE.getNewsByLogin(currentAuthor.getEmail());
+            session.setAttribute(Parameters.TOTAL_PAGES_QUANTITY,
+                    newsService.countNewsByLogin(currentAuthor.getEmail()));
+            List<News> listNews = newsService.getNewsByLogin(currentAuthor.getEmail(),
+                    paginator.update(request));
             request.setAttribute(Parameters.NEWS_LIST, listNews);
             List<NewsCategory> listCategory = NewsCategoryServiceImpl.INSTANCE.findAll();
             request.setAttribute(Parameters.CATEGORY_LIST, listCategory);
@@ -56,10 +62,11 @@ public class AddNewsCommand extends AbstractCommand {
         catch (ServiceException e) {
             page = configManager.getProperty(ConfigConstants.ERROR_PAGE_PATH);
             request.setAttribute(Parameters.ERROR_DATABASE,
-                    messageManager.getProperty(MessageConstants.ERROR_DATABASE));
+                    messageManager.getProperty(MessageConstants.ERROR_DATABASE, request));
         }
         catch (NumberFormatException e) {
             logger.logError(getClass(), e.getMessage());
+            page = configManager.getProperty(ConfigConstants.ERROR_PAGE_PATH);
         }
         return page;
 

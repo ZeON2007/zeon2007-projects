@@ -4,7 +4,7 @@ import by.pvt.herzhot.commands.factory.CommandType;
 import by.pvt.herzhot.constants.ConfigConstants;
 import by.pvt.herzhot.constants.Parameters;
 import by.pvt.herzhot.constants.UserType;
-import by.pvt.herzhot.managers.impl.ConfigManagerImpl;
+import by.pvt.herzhot.managers.ConfigManagerImpl;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -27,7 +27,7 @@ public class SecurityFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpSession session = request.getSession();
 
-        CommandType type;
+        CommandType commandType;
         boolean isValidCommand = false;
         String commandName = request.getParameter(Parameters.COMMAND);
         if (commandName == null) {
@@ -39,12 +39,12 @@ public class SecurityFilter implements Filter {
             }
         }
         if (isValidCommand) {
-            type = CommandType.valueOf(commandName.toUpperCase());
+            commandType = CommandType.valueOf(commandName.toUpperCase());
         } else {
             session.invalidate();
-            type = CommandType.GOTOMAINPAGE;
+            commandType = CommandType.GOTOMAINPAGE;
         }
-        if (type.getSecurityLevel() > 0) {
+        if (commandType.getSecurityLevel() > 0) {
             UserType userType = (UserType) session.getAttribute("userType");
             if (userType != UserType.AUTHOR) {
                 String page = ConfigManagerImpl.INSTANCE.getProperty(ConfigConstants.LOGIN_PAGE_PATH);
