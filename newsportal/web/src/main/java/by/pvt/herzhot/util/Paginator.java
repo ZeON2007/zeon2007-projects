@@ -77,19 +77,19 @@ public enum Paginator {
             currentMenuSize = pages + 1;
         }
 
-        if (pages <= maxMenuSize) {
+        if (currentMenuSize <= maxMenuSize) {
             for (int i = 1; i <= currentMenuSize; i++ ) {
                 menuItems.add(i);
             }
         } else {
             if (selected <= 5) {
-                for (int i = 1; i < maxMenuSize; i++ ) {
+                for (int i = 1; i <= maxMenuSize-1; i++ ) {
                     menuItems.add(i);
                 }
                 menuItems.add(currentMenuSize);
             } else if (selected >= currentMenuSize - 4) {
                 menuItems.add(1);
-                for (int j = currentMenuSize - maxMenuSize +1 ; j <= currentMenuSize; j++ ) {
+                for (int j = currentMenuSize - (maxMenuSize - 2) ; j <= currentMenuSize; j++ ) {
                     menuItems.add(j);
                 }
             } else {
