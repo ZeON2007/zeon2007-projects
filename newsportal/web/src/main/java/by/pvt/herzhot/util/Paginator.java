@@ -62,7 +62,7 @@ public enum Paginator {
         return paginationParams;
     }
     private void generateStringMenu(Map<String, Integer> paginationParams, HttpServletRequest request) {
-        int maxMenuSize = 10;
+        int maxMenuSize = 11;
         int selected = paginationParams.get(Parameters.SELECTED_PAGE);
         int quantity = paginationParams.get(Parameters.QUANTITY_PER_PAGE);
         int count = paginationParams.get(Parameters.TOTAL_PAGES_QUANTITY);
@@ -82,27 +82,20 @@ public enum Paginator {
                 menuItems.add(i);
             }
         } else {
-            if (selected <= 3 || selected >= currentMenuSize - 2) {
-                for (int i = 1; i <= 5; i++ ) {
+            if (selected <= 5) {
+                for (int i = 1; i < maxMenuSize; i++ ) {
                     menuItems.add(i);
                 }
-                for (int j = currentMenuSize - 4; j <= currentMenuSize; j++ ) {
-                    menuItems.add(j);
-                }
-            } else if (selected < currentMenuSize/2) {
+                menuItems.add(currentMenuSize);
+            } else if (selected >= currentMenuSize - 4) {
                 menuItems.add(1);
-                for (int i = selected-2; i <= selected+2; i++ ) {
-                    menuItems.add(i);
-                }
-                for (int j = currentMenuSize - 4; j <= currentMenuSize; j++ ) {
+                for (int j = currentMenuSize - maxMenuSize +1 ; j <= currentMenuSize; j++ ) {
                     menuItems.add(j);
                 }
-            } else if (selected >= currentMenuSize/2) {
-                for (int i = 1; i <= 5; i++ ) {
+            } else {
+                menuItems.add(1);
+                for (int i = selected - 4; i <= selected + 4; i++ ) {
                     menuItems.add(i);
-                }
-                for (int j = selected - 2; j <= selected+2; j++ ) {
-                    menuItems.add(j);
                 }
                 menuItems.add(currentMenuSize);
             }
