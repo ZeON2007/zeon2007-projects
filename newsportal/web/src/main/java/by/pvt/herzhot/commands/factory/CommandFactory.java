@@ -8,6 +8,7 @@ import by.pvt.herzhot.util.Paginator;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author Herzhot
@@ -31,7 +32,15 @@ public enum CommandFactory {
         } else {
             for (CommandType c : CommandType.values()) {
                 if (c.name().equals(commandName.toUpperCase()) && !c.name().equals("UPDATEPAGE")) {
-                    command = c.valueOf(commandName.toUpperCase()).getCurrentCommand();
+
+                    command = CommandType.valueOf(commandName.toUpperCase()).getCurrentCommand();
+
+                    Map<String, Integer> paginationParams =
+                            (Map<String, Integer>) session.getAttribute(Parameters.PAGINATION_PARAMS);
+                    if (paginationParams != null) {
+                        paginationParams.replace(Parameters.SELECTED_PAGE, 1);
+                        session.setAttribute(Parameters.PAGINATION_PARAMS, paginationParams);
+                    }
                     session.setAttribute(Parameters.PREVIOUS_COMMAND, c.name());
                 }
             }

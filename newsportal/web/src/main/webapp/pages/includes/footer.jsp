@@ -20,12 +20,17 @@
     <span>
         <c:forEach var="item" items="${sessionScope.paginationMenu}">
 
+            <c:if test="${item != sessionScope.paginationParams['selectedPage']}">
                 <a href="<c:url value="controller">
                                 <c:param name="command" value="updatePage" />
                                 <c:param name="selectedPage" value="${item}" />
                             </c:url>" >
                     <c:out value="${item}"/>
                 </a>
+            </c:if>
+            <c:if test="${item == sessionScope.paginationParams['selectedPage']}">
+                <c:out value="${item}"/>
+            </c:if>
 
         </c:forEach>
     </span>
