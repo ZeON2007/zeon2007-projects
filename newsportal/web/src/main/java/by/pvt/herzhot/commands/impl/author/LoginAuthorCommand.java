@@ -72,9 +72,11 @@ public class LoginAuthorCommand extends AbstractCommand {
             }
         }
         catch (ServiceException e) {
+            session.invalidate();
             request.setAttribute(Parameters.ERROR_DATABASE,
                     messageManager.getProperty(MessageConstants.ERROR_DATABASE, request));
             page = configManager.getProperty(ConfigConstants.ERROR_PAGE_PATH);
+
         }
         return page;
     }

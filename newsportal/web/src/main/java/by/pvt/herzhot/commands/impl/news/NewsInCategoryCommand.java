@@ -64,6 +64,7 @@ public class NewsInCategoryCommand extends AbstractCommand {
             }
         }
         catch (ServiceException e) {
+            session.invalidate();
             page = ConfigManagerImpl.INSTANCE.getProperty(ConfigConstants.ERROR_PAGE_PATH);
             request.setAttribute(Parameters.ERROR_DATABASE,
                     MessageManagerImpl.INSTANCE.getProperty(MessageConstants.ERROR_DATABASE, request));

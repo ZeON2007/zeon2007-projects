@@ -11,7 +11,7 @@
 Если Вы считаете, что страницы нет по нашей вине, то можете подать на нас в суд.<br/>
 
 <a href="<c:url value="controller">
-                    <c:param name="command" value="gotoMainPage" />
+                    <c:param name="command" value="" />
                  </c:url>" >
     Перейти на главную страницу.
 </a>

@@ -67,6 +67,9 @@ public enum CommandFactory {
 
             }
             String previousCommandName = (String) session.getAttribute(Parameters.PREVIOUS_COMMAND);
+            if (previousCommandName == null) {
+                previousCommandName = CommandType.GOTOMAINPAGE.name();
+            }
             if (previousCommandName.equals(CommandType.ADDNEWS.name())
                     || previousCommandName.equals(CommandType.DELETENEWS.name())) {
                 previousCommandName = CommandType.LOGIN.name();

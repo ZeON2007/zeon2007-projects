@@ -10,7 +10,7 @@
 		Извините, но в данный момент сервис не доступен: <br/>
 		${errorDatabase} <br/>
 		<a href="<c:url value="controller">
-                    <c:param name="command" value="gotoMainPage" />
+                    <c:param name="command" value="" />
                  </c:url>" >
 			Назад
 		</a>

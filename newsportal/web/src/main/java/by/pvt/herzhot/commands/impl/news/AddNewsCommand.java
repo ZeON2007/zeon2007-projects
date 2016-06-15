@@ -60,11 +60,13 @@ public class AddNewsCommand extends AbstractCommand {
             page = configManager.getProperty(ConfigConstants.INDEX_PAGE_PATH);
         }
         catch (ServiceException e) {
+            session.invalidate();
             page = configManager.getProperty(ConfigConstants.ERROR_PAGE_PATH);
             request.setAttribute(Parameters.ERROR_DATABASE,
                     messageManager.getProperty(MessageConstants.ERROR_DATABASE, request));
         }
         catch (NumberFormatException e) {
+            session.invalidate();
             logger.logError(getClass(), e.getMessage());
             page = configManager.getProperty(ConfigConstants.ERROR_PAGE_PATH);
         }

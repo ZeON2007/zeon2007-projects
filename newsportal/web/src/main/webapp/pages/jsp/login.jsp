@@ -2,34 +2,77 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
     <meta charset="utf-8">
-    <title>News Portal</title>
-    <link rel="stylesheet" href="css/styles.css" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Login</title>
+
+    <!-- Bootstrap -->
+    <link href="../../css/bootstrap.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="../../css/signin.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
 </head>
 <body>
-    <h1>Авторизация</h1>
-    <p>Введите свои данные в представленной форме:</p>
-    <form action="controller" method="POST">
-        <input type="hidden" name="command" value="login">
+    <div class="container">
+        <form id="form_id"
+              class="form-signin"
+              action="controller"
+              method="post">
+            <input type="hidden" name="command" value="login">
 
-        <label class="pad_top">Email:</label>
-        <input type="email" name="email" value="${author.email}" required><br>
+            <h2 class="form-signin-heading">Please sign in:</h2>
+            <p id='result'></p>
 
-        <label class="pad_top">Password:</label>
-        <input type="password" name="password" value="${author.password}" required><br>
+            <label for="inputEmail" class="sr-only">Email address</label>
+            <input id="inputEmail"
+                   class="form-control"
+                   type="email"
+                   name="email"
+                   value="${author.email}"
+                   placeholder="Email address"
+                   required autofocus>
 
-        ${errorLoginOrPassword}<br>
+            <label for="inputPassword" class="sr-only">Password</label>
+            <input id="inputPassword"
+                   class="form-control"
+                   type="password"
+                   name="password"
+                   value="${author.password}"
+                   placeholder="Password"
+                   required>
 
-        <label class="pad_top">&nbsp;</label>
-        <input type="submit" value="ВОЙТИ" class="margin_left"><br>
+            <p>${errorLoginOrPassword}</p>
 
-        <a href="<c:url value="controller">
-                        <c:param name="command" value="gotoMainPage" />
-                    </c:url>" >
-            Перейти на главную страницу
-        </a>
-    </form>
+            <button class="btn btn-lg btn-primary btn-block"
+                    type="submit"
+                    onclick="return validate('form_id','inputEmail');">
+                Sign in
+            </button><br>
+            <p>
+                <a href="<c:url value="controller">
+                            <c:param name="command" value="gotoMainPage" />
+                        </c:url>" >
+                    Вернуться на главную страницу
+                </a>
+            </p>
+        </form>
+    </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="../../js/jquery-2.2.4.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="../../js/validator.js"></script>
+
 </body>
 </html>
