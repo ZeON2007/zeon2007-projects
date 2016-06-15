@@ -1,9 +1,9 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<ul id="menu">
+<ul class="list-unstyled">
     <c:forEach var="category" items="${categoryList}">
-        <li id="menuItem">
+        <li>
             <a href="<c:url value="controller">
                             <c:param name="command" value="gotoCategoryPage" />
                             <c:param name="selectedCategoryId" value="${category.id}" />

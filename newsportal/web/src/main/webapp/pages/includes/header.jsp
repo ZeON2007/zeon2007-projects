@@ -2,42 +2,23 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <title>News Portal</title>
-        <link rel="stylesheet" href="css/styles.css" />
-    </head>
-    <body>
-    <h1>НОВОСТНОЙ ПОРТАЛ</h1>
-    <p>
-        <a href="<c:url value="controller">
-                        <c:param name="command" value="updatePage" />
-                        <c:param name="language" value="ru" />
-                     </c:url>" >
-            RU
-        </a>
-        <a href="<c:url value="controller">
-                        <c:param name="command" value="updatePage" />
-                        <c:param name="language" value="en" />
-                     </c:url>" >
-            EN
-        </a>
-    </p>
-    <h2>
-        <c:if test="${userType == null}">
-            <a href="<c:url value="controller">
-                        <c:param name="command" value="gotoLoginPage" />
-                     </c:url>" >
-                LOGIN
-            </a>
-        </c:if>
-        <c:if test="${userType == 'AUTHOR'}">
-            <h2>Здравствуйте, уважаемый ${author.firstName} ${author.lastName}</h2>
-            <a href="<c:url value="controller">
-                        <c:param name="command" value="logout" />
-                    </c:url>" >
-                LOGOUT
-            </a>
-        </c:if>
-    </h2>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>News</title>
+
+    <!-- Bootstrap -->
+    <link href="../../css/bootstrap.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+
