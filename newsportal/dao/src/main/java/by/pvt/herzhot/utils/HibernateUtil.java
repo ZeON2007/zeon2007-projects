@@ -19,6 +19,7 @@ public class HibernateUtil {
 
     private static final SessionFactory sessionFactory = buildSessionFactory();
     private static final ThreadLocal sessionThreadLocal = new ThreadLocal();
+    //TODO refactor util without transactionThreadLocal
     private static final ThreadLocal transactionThreadLocal = new ThreadLocal();
 
     private HibernateUtil(){}

@@ -1,5 +1,11 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<fmt:setLocale value="${sessionScope.locale}"/>
+<fmt:setBundle basename="messages" var="loc"/>
+<fmt:message bundle="${loc}" key="message.quantity" var="m_quantity"/>
+
 
 <p>
     <c:forEach var="item" items="${sessionScope.paginationMenu}">
@@ -20,7 +26,7 @@
 </p>
 <form action="controller" method="get">
     <input type="hidden" name="command" value="updatePage">
-    <input type="submit" value="quantity" >
+    <input type="submit" value="<c:out value="${m_quantity}"/>" >
     <select name="quantityPerPage" >
         <option value="1">1</option>
         <option value="2">2</option>

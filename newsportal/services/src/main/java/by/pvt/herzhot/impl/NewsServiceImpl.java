@@ -186,4 +186,12 @@ public enum NewsServiceImpl implements IService<News> {
         }
         return result;
     }
+
+    public NewsDaoImpl getDao() {
+        return dao;
+    }
+
+    public void setDao(NewsDaoImpl dao) {
+        this.dao = dao;
+    }
 }

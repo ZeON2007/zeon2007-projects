@@ -1,5 +1,11 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<fmt:setLocale value="${sessionScope.locale}"/>
+<fmt:setBundle basename="messages" var="loc"/>
+<fmt:message bundle="${loc}" key="message.owner" var="m_owner"/>
+
 
 <c:import url="../includes/header.jsp"/>
 
@@ -45,7 +51,7 @@
 
     <div class="container" style="padding-top: 20px">
 
-        <p>&copy; Copyright 2016 Александр Гержот</p>
+        <p>&copy; Copyright 2016 <c:out value="${m_owner}"/></p>
 
     </div>
 

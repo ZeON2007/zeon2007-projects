@@ -1,5 +1,13 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<fmt:setLocale value="${sessionScope.locale}"/>
+<fmt:setBundle basename="messages" var="loc"/>
+<fmt:message bundle="${loc}" key="message.signin" var="m_signin"/>
+<fmt:message bundle="${loc}" key="message.portal" var="m_portal"/>
+<fmt:message bundle="${loc}" key="message.logout" var="m_logout"/>
+<fmt:message bundle="${loc}" key="message.enter" var="m_enter"/>
 
 <!DOCTYPE html>
 <html lang="ru">
@@ -31,7 +39,7 @@
               method="post">
             <input type="hidden" name="command" value="login">
 
-            <h2 class="form-signin-heading">Please sign in:</h2>
+            <h2 class="form-signin-heading"><c:out value="${m_signin}"/></h2>
             <p id='result'></p>
 
             <label for="inputEmail" class="sr-only">Email address</label>
@@ -56,7 +64,8 @@
 
             <button class="btn btn-lg btn-primary btn-block"
                     type="submit"
-                    onclick="return validate('form_id','inputEmail');">
+                    <%--onclick="return validate('form_id','inputEmail');"--%>
+            >
                 Sign in
             </button><br>
             <p>

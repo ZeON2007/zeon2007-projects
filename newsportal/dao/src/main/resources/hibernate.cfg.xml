@@ -28,11 +28,16 @@
         <property name="hibernate.c3p0.max_statements">50</property>
         <property name="hibernate.c3p0.idle_test_period">3000</property>
 
+        <!--&lt;!&ndash;Cache configuration&ndash;&gt;-->
+        <!--<property name="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</property>-->
+        <!--<property name="cache.use_query_cache">true</property>-->
+        <!--<property name="cache.use_second_level_cache">true</property>-->
+
         <!-- Show and print nice SQL -->
         <!--<property name="show_sql">true</property>-->
         <!--<property name="format_sql">true</property>-->
 
-        <!--<property name="hibernate.hbm2ddl.auto">update</property>-->
+        <property name="hibernate.hbm2ddl.auto">update</property>
 
         <!-- Mapping files -->
         <mapping resource="Author.hbm.xml"/>
