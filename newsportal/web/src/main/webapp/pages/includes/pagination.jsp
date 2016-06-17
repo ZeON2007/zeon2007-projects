@@ -36,27 +36,27 @@
     <input type="submit" value="<c:out value="${m_quantity}"/>" >
     <select name="quantityPerPage" >
         <option value="1"
-            <c:if test="${paginationParams['quantityPerPage'] == 1}">
+            <c:if test="${sessionScope.paginationParams['quantityPerPage'] == 1}">
                 selected
             </c:if>
         >1</option>
         <option value="2"
-            <c:if test="${paginationParams['quantityPerPage'] == 2}">
+            <c:if test="${sessionScope.paginationParams['quantityPerPage'] == 2}">
                 selected
             </c:if>
         >2</option>
         <option value="5"
-            <c:if test="${paginationParams['quantityPerPage'] == 5}">
+            <c:if test="${sessionScope.paginationParams['quantityPerPage'] == 5}">
                 selected
             </c:if>
         >5</option>
         <option value="10"
-            <c:if test="${paginationParams['quantityPerPage'] == 10}">
+            <c:if test="${sessionScope.paginationParams['quantityPerPage'] == 10}">
                 selected
             </c:if>
         >10</option>
         <option value="20"
-            <c:if test="${paginationParams['quantityPerPage'] == 20}">
+            <c:if test="${sessionScope.paginationParams['quantityPerPage'] == 20}">
                 selected
             </c:if>
         >20</option>
