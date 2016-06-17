@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="messages" var="loc"/>
@@ -8,7 +9,13 @@
 
 
 <p>
-    <c:forEach var="item" items="${sessionScope.paginationMenu}">
+    <c:forEach var="item" items="${sessionScope.paginationMenu}" varStatus="status">
+
+        <c:if test="${!status.first}">
+            <c:if test="${sessionScope.paginationMenu[status.index] - sessionScope.paginationMenu[status.index - 1] != 1}">
+                <span class="lead">...</span>
+            </c:if>
+        </c:if>
 
         <c:if test="${item != sessionScope.paginationParams['selectedPage']}">
             <a class="lead" href="<c:url value="controller">
@@ -18,8 +25,9 @@
                 <c:out value="${item}"/>
             </a>
         </c:if>
+        
         <c:if test="${item == sessionScope.paginationParams['selectedPage']}">
-            <span style="font-size: large"><c:out value="${item}"/></span>
+            <span class="lead"><c:out value="${item}"/></span>
         </c:if>
 
     </c:forEach>

@@ -64,7 +64,7 @@
 
             <button class="btn btn-lg btn-primary btn-block"
                     type="submit"
-                    <%--onclick="return validate('form_id','inputEmail');"--%>
+                    onclick="return validate('form_id','inputEmail');"
             >
                 Sign in
             </button><br>
