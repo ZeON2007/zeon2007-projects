@@ -7,7 +7,6 @@
 <fmt:setBundle basename="messages" var="loc"/>
 <fmt:message bundle="${loc}" key="message.quantity" var="m_quantity"/>
 
-
 <p>
     <c:forEach var="item" items="${sessionScope.paginationMenu}" varStatus="status">
 
@@ -35,15 +34,47 @@
 <form action="controller" method="get">
     <input type="hidden" name="command" value="updatePage">
     <input type="submit" value="<c:out value="${m_quantity}"/>" >
+
     <select name="quantityPerPage" >
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="5">5</option>
-        <option value="10">10</option>
-        <option value="20">20</option>
-        <option value="50">100</option>
+
+        <c:if test="${sessionScope.paginationParams['quantityPerPage'] == 1}">
+            <option value="1" selected>1</option>
+        </c:if>
+        <c:if test="${sessionScope.paginationParams['quantityPerPage'] != 1}">
+            <option value="1">1</option>
+        </c:if>
+
+        <c:if test="${sessionScope.paginationParams['quantityPerPage'] == 2}">
+            <option value="2" selected>2</option>
+        </c:if>
+        <c:if test="${sessionScope.paginationParams['quantityPerPage'] != 2}">
+            <option value="2">2</option>
+        </c:if>
+
+        <c:if test="${sessionScope.paginationParams['quantityPerPage'] == 5}">
+            <option value="5" selected>5</option>
+        </c:if>
+        <c:if test="${sessionScope.paginationParams['quantityPerPage'] != 5}">
+            <option value="5">5</option>
+        </c:if>
+
+        <c:if test="${sessionScope.paginationParams['quantityPerPage'] == 10}">
+            <option value="10" selected>10</option>
+        </c:if>
+        <c:if test="${sessionScope.paginationParams['quantityPerPage'] != 10}">
+            <option value="10">10</option>
+        </c:if>
+
+        <c:if test="${sessionScope.paginationParams['quantityPerPage'] == 20}">
+            <option value="20" selected>20</option>
+        </c:if>
+        <c:if test="${sessionScope.paginationParams['quantityPerPage'] != 20}">
+            <option value="20">20</option>
+        </c:if>
+
     </select>
 </form>
+
 
 
 
