@@ -1,16 +1,17 @@
 package by.pvt.herzhot.dao;
 
 import by.pvt.herzhot.dao.exceptions.DaoException;
-import by.pvt.herzhot.utils.LoggingUtil;
+import by.pvt.herzhot.dao.utils.LoggingUtil;
 import org.hibernate.HibernateException;
-import org.hibernate.criterion.Projection;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Projections;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
-import java.util.Map;
 
-import static by.pvt.herzhot.utils.HibernateUtil.*;
+
 
 /**
  * @author Herzhot
@@ -20,6 +21,12 @@ import static by.pvt.herzhot.utils.HibernateUtil.*;
 public abstract class AbstractDao<T> implements IDao<T> {
 
     protected LoggingUtil logger = LoggingUtil.INSTANCE;
+
+    protected SessionFactory sessionFactory;
+
+    protected Session currentSession() {
+        return sessionFactory.getCurrentSession();
+    }
 
     @Override
     public T find(int id) throws DaoException {

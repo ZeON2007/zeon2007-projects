@@ -1,16 +1,5 @@
 package by.pvt.herzhot.util;
 
-import by.pvt.herzhot.exceptions.ServiceException;
-import by.pvt.herzhot.impl.AuthorServiceImpl;
-import by.pvt.herzhot.impl.NewsCategoryServiceImpl;
-import by.pvt.herzhot.impl.NewsServiceImpl;
-import by.pvt.herzhot.pojos.impl.Author;
-import by.pvt.herzhot.pojos.impl.News;
-import by.pvt.herzhot.pojos.impl.NewsCategory;
-import by.pvt.herzhot.utils.LoggingUtil;
-
-import java.util.*;
-
 /**
  * @author Herzhot
  * @version 1.0
