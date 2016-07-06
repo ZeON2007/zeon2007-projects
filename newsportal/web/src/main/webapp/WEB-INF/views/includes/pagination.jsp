@@ -17,8 +17,8 @@
         </c:if>
 
         <c:if test="${item != sessionScope.paginationParams['selectedPage']}">
-            <a class="lead" href="<c:url value="controller">
-                                    <c:param name="command" value="updatePage" />
+            <a class="lead" href="<c:url value="/${requestScope.currentPage}">
+                                    <%--<c:param name="command" value="updatePage" />--%>
                                     <c:param name="selectedPage" value="${item}" />
                                 </c:url>" >
                 <c:out value="${item}"/>

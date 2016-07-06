@@ -2,6 +2,7 @@ package by.pvt.herzhot.managers;
 
 import by.pvt.herzhot.constants.ConfigConstants;
 import by.pvt.herzhot.constants.Parameters;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -13,9 +14,10 @@ import java.util.ResourceBundle;
  * @version 1.0
  *          08.05.2016
  */
-public enum MessageManagerImpl {
+@Component
+public class MessageManager {
 
-    INSTANCE;
+    public MessageManager() {}
 
     public String getProperty(String key, HttpServletRequest request) {
         HttpSession session = request.getSession();

@@ -33,6 +33,7 @@ public class Parameters {
     public static final String QUANTITY_PER_PAGE = "quantityPerPage";
     public static final String SELECTED_PAGE = "selectedPage";
     public static final String LANGUAGE = "language";
+    public static final String CURRENT_PAGE = "currentPage";
 
     public static final String ERROR_LOGIN_OR_PASSWORD = "errorLoginOrPassword";
     public static final String ERROR_DATABASE = "errorDatabase";

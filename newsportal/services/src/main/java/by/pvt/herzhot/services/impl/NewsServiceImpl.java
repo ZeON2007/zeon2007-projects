@@ -117,7 +117,6 @@ public class NewsServiceImpl implements INewsService {
         return count;
     }
 
-
     @Override
     public News find(int id) throws ServiceException {
         News news;

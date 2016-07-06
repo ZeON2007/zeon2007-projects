@@ -11,8 +11,8 @@
         </a><br>
         <c:forEach var="news" items="${newsList}">
             <li>
-                <a href="<c:url value="controller">
-                        <c:param name="command" value="gotoBodytextPage" />
+                <a href="<c:url value="/bodytext">
+
                         <c:param name="selectedNewsId" value="${news.id}" />
                     </c:url>" >
                     <c:out value="${news.name}"/>
@@ -37,8 +37,7 @@
     <ul class="list-unstyled">
         <c:forEach var="news" items="${newsList}">
             <li>
-                <a href="<c:url value="controller">
-                            <c:param name="command" value="gotoBodyTextPage" />
+                <a href="<c:url value="/bodytext">
                             <c:param name="selectedNewsId" value="${news.id}" />
                         </c:url>" >
                     <c:out value="${news.name}"/>

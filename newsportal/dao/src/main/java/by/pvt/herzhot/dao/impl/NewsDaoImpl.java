@@ -28,7 +28,7 @@ public class NewsDaoImpl extends AbstractDao<News> implements INewsDao {
     @Autowired
     private NewsDaoImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
-        System.out.println("in DAO (News) constructors");
+
     }
 
     @Override

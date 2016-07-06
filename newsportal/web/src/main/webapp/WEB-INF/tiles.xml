@@ -3,25 +3,22 @@
         "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
         "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 <tiles-definitions>
-    <!--&lt;!&ndash; USER'S PAGES TEMPLATE &ndash;&gt;-->
-    <!--<definition name="default" template="/WEB-INF/views/layouts/default_layout.jspx">-->
-        <!--<put-attribute name="title"/>-->
-        <!--<put-attribute name="header" value="/WEB-INF/views/includes/header.jsp"/>-->
-    <!--</definition>-->
-
-    <!--&lt;!&ndash; HOME PAGE TEMPLATE&ndash;&gt;-->
-    <!--<definition name="home_template" template="/WEB-INF/views/layouts/home_layout.jspx">-->
-        <!--<put-attribute name="title" value="page.home.title"/>-->
-        <!--<put-attribute name="header" value="/WEB-INF/views/includes/header.jsp"/>-->
-    <!--</definition>-->
-
-    <!--&lt;!&ndash; HOME PAGE &ndash;&gt;-->
-    <!--<definition name="home" extends="home_template"/>-->
 
     <definition name="default" template="/WEB-INF/views/main/main.jsp">
-        <put-attribute name="top" value=""/>
-    </definition>
-    <definition name="main" extends="default">
+        <put-attribute name="header" value="/WEB-INF/views/includes/header.jsp" />
         <put-attribute name="top" value="/WEB-INF/views/includes/top.jsp" />
+        <put-attribute name="navigation" value="/WEB-INF/views/includes/navigation.jsp" />
+        <put-attribute name="content" value="/WEB-INF/views/includes/news.jsp" />
+        <put-attribute name="pagination" value="/WEB-INF/views/includes/pagination.jsp" />
+        <put-attribute name="footer" value="/WEB-INF/views/includes/footer.jsp" />
     </definition>
+
+    <definition name="main" extends="default" />
+    <definition name="category" extends="default" />
+    <definition name="bodytext" extends="default">
+        <put-attribute name="content" value="/WEB-INF/views/includes/maintext.jsp" />
+        <put-attribute name="pagination" value="" />
+    </definition>
+    <definition name="login" template="/WEB-INF/views/authentication/login.jsp" />
+
 </tiles-definitions>

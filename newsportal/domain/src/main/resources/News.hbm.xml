@@ -14,7 +14,9 @@
         <property name="mainText"/>
         <many-to-one
             name="author"
-            class="Author"/>
+            class="Author"
+            lazy="false"
+            />
         <many-to-one
                 name="newsCategory"
                 class="NewsCategory"/>

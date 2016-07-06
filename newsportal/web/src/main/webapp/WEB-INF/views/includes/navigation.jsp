@@ -4,8 +4,7 @@
 <ul class="nav lead">
     <c:forEach var="category" items="${categoryList}">
         <li>
-            <a href="<c:url value="controller">
-                            <c:param name="command" value="gotoCategoryPage" />
+            <a href="<c:url value="/category">
                             <c:param name="selectedCategoryId" value="${category.id}" />
                         </c:url>" >
                 <c:out value="${category.category}"/>

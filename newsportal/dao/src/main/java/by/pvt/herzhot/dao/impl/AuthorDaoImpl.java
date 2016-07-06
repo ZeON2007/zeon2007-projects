@@ -23,7 +23,7 @@ public class AuthorDaoImpl extends AbstractDao<Author> implements IAuthorDao {
     @Autowired
     private AuthorDaoImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
-        System.out.println("in DAO (Author) constructors");
+
     }
 
     @Override

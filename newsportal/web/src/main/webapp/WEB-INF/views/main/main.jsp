@@ -8,13 +8,11 @@
 <fmt:message bundle="${loc}" key="message.owner" var="m_owner"/>
 
 
-<c:import url="../includes/header.jsp"/>
+<tiles:insertAttribute name="header"/>
 
 <div class="container" style="background: #fffcd7">
 
     <div class="container">
-
-        <%--<c:import url="../includes/top.jsp"/>--%>
 
         <tiles:insertAttribute name="top"/>
 
@@ -24,7 +22,7 @@
         <div class="row">
             <div class="col-xs-3" role="navigation">
 
-                <c:import url="../includes/navigation.jsp"/>
+                <tiles:insertAttribute name="navigation"/>
 
             </div>
             <div class="col-xs-9">
@@ -33,19 +31,19 @@
                     <div class="container"
                          style="min-height: 400px; padding-left: 0px">
 
-                        <c:import url="../includes/news.jsp"/>
+                        <tiles:insertAttribute name="content"/>
 
                     </div>
                     <div class="container"
                          style="padding-left: 0px">
 
-                        <c:import url="../includes/pagination.jsp"/>
+                        <tiles:insertAttribute name="pagination"/>
 
                     </div>
                 </c:if>
                 <c:if test="${news != null}">
 
-                    <c:import url="../includes/maintext.jsp"/>
+                    <tiles:insertAttribute name="content"/>
 
                 </c:if>
             </div>
@@ -60,4 +58,4 @@
 
 </div>
 
-<c:import url="../includes/footer.jsp"/>
+<tiles:insertAttribute name="footer"/>

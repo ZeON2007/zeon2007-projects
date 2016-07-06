@@ -18,7 +18,7 @@ public class NewsCategoryDaoImpl extends AbstractDao<NewsCategory> implements IN
     @Autowired
     private NewsCategoryDaoImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
-        System.out.println("in DAO (NewsCategory) constructors");
+
     }
 
 }

@@ -1,6 +1,7 @@
 package by.pvt.herzhot.managers;
 
 import by.pvt.herzhot.constants.ConfigConstants;
+import org.springframework.stereotype.Component;
 
 import java.util.ResourceBundle;
 
@@ -9,9 +10,10 @@ import java.util.ResourceBundle;
  * @version 1.0
  *          08.05.2016
  */
-public enum ConfigManagerImpl {
+@Component
+public class ConfigManager {
 
-    INSTANCE;
+    public ConfigManager() {}
 
     private final ResourceBundle bundle = ResourceBundle.getBundle(ConfigConstants.CONFIGS_SOURCE);
 

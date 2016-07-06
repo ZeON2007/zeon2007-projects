@@ -1,6 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 
 <fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="messages" var="loc"/>
@@ -19,10 +21,10 @@
     <title>Login</title>
 
     <!-- Bootstrap -->
-    <link href="../../css/bootstrap.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/assets/css/bootstrap.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="../../css/signin.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/assets/css/signin.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -33,55 +35,56 @@
 </head>
 <body>
     <div class="container">
-        <form id="form_id"
-              class="form-signin"
-              action="controller"
-              method="post">
-            <input type="hidden" name="command" value="login">
+        <s:url value="/login" var="loginUrl"/>
+        <sf:form id="form_id"
+            name="loginForm"
+            class="form-signin"
+            action="${loginUrl}"
+            modelAttribute="author"
+            method="post">
 
             <h2 class="form-signin-heading"><c:out value="${m_signin}"/></h2>
             <p id='result'></p>
 
             <label for="inputEmail" class="sr-only">Email address</label>
-            <input id="inputEmail"
-                   class="form-control"
-                   type="email"
-                   name="email"
-                   value="${author.email}"
-                   placeholder="Email address"
-                   required autofocus>
+            <sf:input id="inputEmail"
+                class="form-control"
+                path="email"
+                type="email"
+                name="email"
+                value="${author.email}"
+                placeholder="Email address"
+                required="autofocus"/>
 
             <label for="inputPassword" class="sr-only">Password</label>
-            <input id="inputPassword"
+            <sf:input id="inputPassword"
                    class="form-control"
+                   path="password"
                    type="password"
                    name="password"
                    value="${author.password}"
                    placeholder="Password"
-                   required>
+                   required=""/>
 
-            <p>${errorLoginOrPassword}</p>
+            <p>${requestScope.errorLoginOrPassword}</p>
 
             <button class="btn btn-lg btn-primary btn-block"
                     type="submit"
-                    onclick="return validate('form_id','inputEmail');"
-            >
+                    onclick="return validate('form_id','inputEmail');">
                 Sign in
             </button><br>
             <p>
-                <a href="<c:url value="controller">
-                            <c:param name="command" value="gotoMainPage" />
-                        </c:url>" >
+                <a href="<c:url value="/main"/>" >
                     Вернуться на главную страницу
                 </a>
             </p>
-        </form>
+        </sf:form>
     </div>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="../../js/jquery-2.2.4.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/js/jquery-2.2.4.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="../../js/validator.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/js/validator.js"></script>
 
 </body>
 </html>

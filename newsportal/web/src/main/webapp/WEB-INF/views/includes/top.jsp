@@ -37,8 +37,8 @@
     <div class="row" style="padding-left: inherit">
         <c:if test="${userType == null}">
             <a class="btn btn-default" style="padding: 5px"
-               href="<c:url value="controller">
-                        <c:param name="command" value="gotoLoginPage" />
+               href="<c:url value="/login">
+
                      </c:url>">
                 <c:out value="${m_login}"/>
             </a>

@@ -26,18 +26,6 @@
           p:maxTotal="10"
     />
 
-    <!--<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean"-->
-          <!--p:dataSource-ref="dataSource"-->
-          <!--p:namingStrategy-ref="namingStrategy"-->
-    <!--&gt;-->
-
-    <!--<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource"-->
-          <!--p:url="jdbc:mysql://localhost:3306/news_portal?useSSL=false"-->
-          <!--p:driverClassName="com.mysql.jdbc.Driver"-->
-          <!--p:username="root"-->
-          <!--p:password="1234"-->
-    <!--/>-->
-
     <bean id="sessionFactory"
           class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
@@ -65,8 +53,8 @@
                 <prop key="show_sql">true</prop>
                 <prop key="format_sql">true</prop>
 
-
-                <!--<prop key="hibernate.hbm2ddl.auto">update</prop>               -->
+                <!--<prop key="hibernate.enable_lazy_load_no_trans">true</prop>-->
+                <!--<prop key="hibernate.hbm2ddl.auto">update</prop>-->
 
             </props>
         </property>
