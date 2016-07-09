@@ -12,6 +12,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <spring.version>4.2.4.RELEASE</spring.version>
+    <spring.security.version>4.0.3.RELEASE</spring.security.version>
     <apachetiles.version>3.0.5</apachetiles.version>
     <log4j.version>1.2.17</log4j.version>
     <slf4j.version>1.5.6</slf4j.version>
@@ -117,6 +118,25 @@
         <groupId>org.springframework</groupId>
         <artifactId>spring-aspects</artifactId>
         <version>${spring.version}</version>
+      </dependency>
+
+      <!-- Spring security -->
+      <dependency>
+        <groupId>org.springframework.security</groupId>
+        <artifactId>spring-security-web</artifactId>
+        <version>${spring.security.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.springframework.security</groupId>
+        <artifactId>spring-security-config</artifactId>
+        <version>${spring.security.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.springframework.security</groupId>
+        <artifactId>spring-security-taglibs</artifactId>
+        <version>${spring.security.version}</version>
       </dependency>
 
       <!-- Apache Tiles -->

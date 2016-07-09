@@ -17,14 +17,12 @@
             <h1><c:out value="${m_portal}"/></h1>
         </div>
         <div class="col-xs-6">
-            <a style="padding-right: 15px" href="<c:url value="controller">
-                    <c:param name="command" value="updatePage" />
+            <a style="padding-right: 15px" href="<c:url value="/${requestScope.currentPage}">
                     <c:param name="language" value="ru" />
                  </c:url>">
                 <img src="${pageContext.request.contextPath}/assets/images/flags/russia.png">
             </a>
-            <a href="<c:url value="controller">
-                        <c:param name="command" value="updatePage" />
+            <a href="<c:url value="/${requestScope.currentPage}">
                         <c:param name="language" value="en" />
                      </c:url>">
                 <img src="${pageContext.request.contextPath}/assets/images/flags/usa.png">
@@ -35,6 +33,8 @@
 
 <div class="container" style="min-height: 40px">
     <div class="row" style="padding-left: inherit">
+        ${pageContext.request.userPrincipal.name}
+        ${pageContext.request.userPrincipal}
         <c:if test="${userType == null}">
             <a class="btn btn-default" style="padding: 5px"
                href="<c:url value="/login">
@@ -46,7 +46,7 @@
         <c:if test="${userType == 'AUTHOR'}">
             <a class="btn btn-default"
                style="padding-right: 15px"
-               href="<c:url value="controller">
+               href="<c:url value="/logout">
                         <c:param name="command" value="logout" />
                     </c:url>">
                 <c:out value="${m_logout}"/>

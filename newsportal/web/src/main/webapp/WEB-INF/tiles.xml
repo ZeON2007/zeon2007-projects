@@ -20,5 +20,6 @@
         <put-attribute name="pagination" value="" />
     </definition>
     <definition name="login" template="/WEB-INF/views/authentication/login.jsp" />
+    <definition name="author/add" template="/WEB-INF/views/addnews/addnews.jsp" />
 
 </tiles-definitions>

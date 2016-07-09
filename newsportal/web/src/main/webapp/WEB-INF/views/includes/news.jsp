@@ -4,7 +4,7 @@
 
 <c:if test="${userType == 'AUTHOR'}">
     <ul class="list-unstyled">
-        <a href="<c:url value="controller">
+        <a href="<c:url value="/author/add">
                     <c:param name="command" value="gotoAddNewsPage" />
                 </c:url>" >
             ADD

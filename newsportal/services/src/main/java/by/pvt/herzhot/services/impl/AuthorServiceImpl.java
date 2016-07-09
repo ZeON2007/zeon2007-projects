@@ -30,7 +30,6 @@ public class AuthorServiceImpl implements IAuthorService {
     @Autowired
     public AuthorServiceImpl(IAuthorDao dao){
         this.dao = dao;
-        System.out.println("in SERVICE (Author) constructors");
     }
 
     @Override

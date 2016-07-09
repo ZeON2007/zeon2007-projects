@@ -35,49 +35,54 @@
 </head>
 <body>
     <div class="container">
-        <s:url value="/login" var="loginUrl"/>
+        <s:url value="/j_spring_security_check" var="loginUrl"/>
         <sf:form id="form_id"
             name="loginForm"
             class="form-signin"
             action="${loginUrl}"
             modelAttribute="author"
             method="post">
+            <fieldset>
+                <h2 class="form-signin-heading"><c:out value="${m_signin}"/></h2>
+                <p id='result'></p>
 
-            <h2 class="form-signin-heading"><c:out value="${m_signin}"/></h2>
-            <p id='result'></p>
+                <label for="inputEmail" class="sr-only">Email address</label>
+                <sf:input id="inputEmail"
+                    class="form-control"
+                    path="email"
+                    type="email"
+                    name="j_email"
+                    value="${author.email}"
+                    placeholder="Email address"
+                    required="autofocus"/>
 
-            <label for="inputEmail" class="sr-only">Email address</label>
-            <sf:input id="inputEmail"
-                class="form-control"
-                path="email"
-                type="email"
-                name="email"
-                value="${author.email}"
-                placeholder="Email address"
-                required="autofocus"/>
+                <label for="inputPassword" class="sr-only">Password</label>
+                <sf:input id="inputPassword"
+                       class="form-control"
+                       path="password"
+                       type="password"
+                       name="j_password"
+                       value="${author.password}"
+                       placeholder="Password"
+                       required=""/>
 
-            <label for="inputPassword" class="sr-only">Password</label>
-            <sf:input id="inputPassword"
-                   class="form-control"
-                   path="password"
-                   type="password"
-                   name="password"
-                   value="${author.password}"
-                   placeholder="Password"
-                   required=""/>
+                <p>${requestScope.errorLoginOrPassword}</p>
 
-            <p>${requestScope.errorLoginOrPassword}</p>
+                <button class="btn btn-lg btn-primary btn-block"
+                        type="submit"
+                        onclick="return validate('form_id','inputEmail');">
+                    Sign in
+                </button><br>
 
-            <button class="btn btn-lg btn-primary btn-block"
-                    type="submit"
-                    onclick="return validate('form_id','inputEmail');">
-                Sign in
-            </button><br>
-            <p>
-                <a href="<c:url value="/main"/>" >
-                    Вернуться на главную страницу
-                </a>
-            </p>
+                <label for="remember_me" class="inline">Remember me</label>
+                <input id="remember_me" name="_spring_security_remember_me" type="checkbox"/>
+
+                <p>
+                    <a href="<c:url value="/main"/>" >
+                        Вернуться на главную страницу
+                    </a>
+                </p>
+            </fieldset>
         </sf:form>
     </div>
 

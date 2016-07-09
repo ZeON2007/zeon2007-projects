@@ -19,10 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,6 +27,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -43,8 +41,9 @@ import java.util.Map;
         Parameters.AUTHOR,
         Parameters.USERTYPE,
         Parameters.PAGINATION_MENU,
+        Parameters.LOCALE,
         Parameters.PAGINATION_PARAMS})
-public class UserController {
+public class MainController {
 
     @Autowired
     private INewsService newsService;
@@ -61,9 +60,32 @@ public class UserController {
     @Autowired
     private MessageManager messageManager;
 
-    @RequestMapping(value = {"/", "/main"}, method = RequestMethod.GET)
-    public String showMainPage(HttpServletRequest request, ModelMap model) {
+    @ModelAttribute(Parameters.LOCALE)
+    public Locale createDefaultLocale() {
+        return new Locale("ru", "RU");
+    }
 
+    @RequestMapping(value = {"/", "/start"}, method = RequestMethod.GET)
+    public String initializeResources(HttpServletRequest request, ModelMap model) {
+        String page;
+        try {
+            List<NewsCategory> listCategory = newsCategoryService.findAll();
+            model.addAttribute(Parameters.CATEGORY_LIST, listCategory);
+
+            page = configManager.getProperty(ConfigConstants.MAIN_PAGE_PATH);
+        } catch (ServiceException e) {
+            page = configManager.getProperty(ConfigConstants.ERROR_PAGE_PATH);
+            model.addAttribute(Parameters.ERROR_DATABASE,
+                    messageManager.getProperty(MessageConstants.ERROR_DATABASE, request));
+        }
+        return "redirect:/" + page;
+    }
+
+    @RequestMapping(value = {"/main"}, method = RequestMethod.GET)
+    public String showMainPage(HttpServletRequest request,
+                               @RequestParam(value = Parameters.LANGUAGE, required = false) String language,
+                               ModelMap model) {
+        changeLanguage(model, language);
         Map<String, Integer> paginationParams;
         String page;
 
@@ -76,14 +98,11 @@ public class UserController {
             List<News> listNews = newsService.findAll(paginationParams);
             model.addAttribute(Parameters.NEWS_LIST, listNews);
 
-            List<NewsCategory> listCategory = newsCategoryService.findAll();
-            model.addAttribute(Parameters.CATEGORY_LIST, listCategory);
-
             page = configManager.getProperty(ConfigConstants.MAIN_PAGE_PATH);
         }
         catch (ServiceException e) {
             page = configManager.getProperty(ConfigConstants.ERROR_PAGE_PATH);
-            request.setAttribute(Parameters.ERROR_DATABASE,
+            model.addAttribute(Parameters.ERROR_DATABASE,
                     messageManager.getProperty(MessageConstants.ERROR_DATABASE, request));
         }
         model.addAttribute(Parameters.CURRENT_PAGE, page);
@@ -91,8 +110,11 @@ public class UserController {
     }
 
     @RequestMapping(value = {"/category"}, method = RequestMethod.GET)
-    public String showNewsCategoryPage(HttpServletRequest request, ModelMap model) {
+    public String showNewsCategoryPage(HttpServletRequest request,
+                                       @RequestParam(value = Parameters.LANGUAGE, required = false) String language,
+                                       ModelMap model) {
 
+        changeLanguage(model, language);
         Map<String, Integer> paginationParams;
         HttpSession session = request.getSession();
         String page;
@@ -136,7 +158,7 @@ public class UserController {
         }
         catch (ServiceException e) {
             page = configManager.getProperty(ConfigConstants.ERROR_PAGE_PATH);
-            request.setAttribute(Parameters.ERROR_DATABASE,
+            model.addAttribute(Parameters.ERROR_DATABASE,
                     messageManager.getProperty(MessageConstants.ERROR_DATABASE, request));
         }
         model.addAttribute(Parameters.CURRENT_PAGE, page);
@@ -144,8 +166,11 @@ public class UserController {
     }
 
     @RequestMapping(value = {"/bodytext"}, method = RequestMethod.GET)
-    public String showBodyTextPage(HttpServletRequest request, ModelMap model) {
+    public String showBodyTextPage(HttpServletRequest request,
+                                   @RequestParam(value = Parameters.LANGUAGE, required = false) String language,
+                                   ModelMap model) {
 
+        changeLanguage(model, language);
         HttpSession session = request.getSession();
         String page;
         String selectedNewsId = request.getParameter(Parameters.SELECTED_NEWS_ID);
@@ -172,7 +197,7 @@ public class UserController {
         }
         catch (ServiceException e) {
             page = configManager.getProperty(ConfigConstants.ERROR_PAGE_PATH);
-            request.setAttribute(Parameters.ERROR_DATABASE,
+            model.addAttribute(Parameters.ERROR_DATABASE,
                     messageManager.getProperty(MessageConstants.ERROR_DATABASE, request));
         }
 
@@ -193,8 +218,8 @@ public class UserController {
 
         Map<String, Integer> paginationParams;
         String page;
-        HttpSession session = request.getSession();
-        Author currentAuthor = (Author) session.getAttribute(Parameters.AUTHOR);
+//        HttpSession session = request.getSession();
+//        Author currentAuthor = (Author) session.getAttribute(Parameters.AUTHOR);
 
         if(!bindingResult.hasErrors()) {
             String login = authorDTO.getEmail();
@@ -220,18 +245,18 @@ public class UserController {
                     page = configManager.getProperty(ConfigConstants.LOGIN_PAGE_PATH);
                 }
 
-                if (currentAuthor != null) {
-                    login = currentAuthor.getEmail();
-                    paginationParams = paginator.update(request, newsService.countNewsByLogin(login));
-                    model.addAttribute(Parameters.PAGINATION_PARAMS, paginationParams);
-                    model.addAttribute(Parameters.PAGINATION_MENU,
-                            menuHelper.createStringMenu(paginationParams));
-
-                    List<News> listNews = newsService.getNewsByLogin(login, paginationParams);
-                    request.setAttribute(Parameters.NEWS_LIST, listNews);
-
-                    page = configManager.getProperty(ConfigConstants.MAIN_PAGE_PATH);
-                }
+//                if (currentAuthor != null) {
+//                    login = currentAuthor.getEmail();
+//                    paginationParams = paginator.update(request, newsService.countNewsByLogin(login));
+//                    model.addAttribute(Parameters.PAGINATION_PARAMS, paginationParams);
+//                    model.addAttribute(Parameters.PAGINATION_MENU,
+//                            menuHelper.createStringMenu(paginationParams));
+//
+//                    List<News> listNews = newsService.getNewsByLogin(login, paginationParams);
+//                    request.setAttribute(Parameters.NEWS_LIST, listNews);
+//
+//                    page = configManager.getProperty(ConfigConstants.MAIN_PAGE_PATH);
+//                }
             } catch (ServiceException e) {
                 model.addAttribute(Parameters.ERROR_DATABASE,
                         messageManager.getProperty(MessageConstants.ERROR_DATABASE, request));
@@ -242,5 +267,15 @@ public class UserController {
             page = configManager.getProperty(ConfigConstants.LOGIN_PAGE_PATH);
         }
         return page;
+    }
+
+    private void changeLanguage(ModelMap model, String language) {
+        if (language != null) {
+            if (language.equals("en")) {
+                model.replace(Parameters.LOCALE, new Locale("en", "US"));
+            } else {
+                model.replace(Parameters.LOCALE, new Locale("ru", "RU"));
+            }
+        }
     }
 }

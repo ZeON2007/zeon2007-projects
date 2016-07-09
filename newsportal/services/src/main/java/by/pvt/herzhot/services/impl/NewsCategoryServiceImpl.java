@@ -30,7 +30,6 @@ public class NewsCategoryServiceImpl implements INewsCategoryService {
     @Autowired
     public NewsCategoryServiceImpl(INewsCategoryDao dao){
         this.dao = dao;
-        System.out.println("in SERVICE (NewsCategory) constructors");
     }
 
 

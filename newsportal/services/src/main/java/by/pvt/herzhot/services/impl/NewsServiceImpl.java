@@ -31,7 +31,6 @@ public class NewsServiceImpl implements INewsService {
     @Autowired
     public NewsServiceImpl(INewsDao dao){
         this.dao = dao;
-        System.out.println("in SERVICE (News) constructors");
     }
 
     @Override
