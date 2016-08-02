@@ -89,6 +89,7 @@ public class MainController {
         Map<String, Integer> paginationParams;
         String page;
 
+
         try {
             paginationParams = paginator.update(request, newsService.count());
             model.addAttribute(Parameters.PAGINATION_PARAMS, paginationParams);
