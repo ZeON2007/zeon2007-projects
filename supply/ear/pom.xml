@@ -10,7 +10,7 @@
     <version>1.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>supply-ear</artifactId>
+  <artifactId>ear</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>ear</packaging>
 
@@ -41,6 +41,7 @@
   </dependencies>
 
   <build>
+    <finalName>supply</finalName>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -70,6 +71,6 @@
     </plugins>
   </build>
 
-  <name>supply-ear</name>
+  <name>ear</name>
   <url>http://maven.apache.org</url>
 </project>
