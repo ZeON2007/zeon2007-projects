@@ -1,7 +1,9 @@
 package by.herzhot;
 
 
-import java.io.Serializable;
+import by.herzhot.exceptions.DaoException;
+
+import java.util.List;
 
 /**
  * @author Herzhot
@@ -9,8 +11,13 @@ import java.io.Serializable;
  *          03.08.2016
  */
 
-public interface IDao<T> extends Serializable {
+public interface IDao<T> {
 
-    T find(Long id) ;
+    void create(T t) throws DaoException;
+    T read(Long id) throws DaoException;
+    void update(T t) throws DaoException;
+    void delete(Long id) throws DaoException;
+    List<T> readAll() throws DaoException;
+    Integer count() throws DaoException;
 
 }

@@ -8,8 +8,5 @@ import javax.ejb.Local;
  *          09.08.2016
  */
 @Local
-public interface IMaterialService extends IService<Material> {
-
-
-
+public interface ISupplierService extends IService<Supplier> {
 }

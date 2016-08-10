@@ -8,4 +8,6 @@ import java.io.Serializable;
  *          03.08.2016
  */
 public interface IEntity extends Serializable {
+
+
 }

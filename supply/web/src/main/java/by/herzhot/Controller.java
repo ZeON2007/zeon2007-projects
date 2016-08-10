@@ -1,5 +1,7 @@
 package by.herzhot;
 
+import by.herzhot.exceptions.ServiceException;
+
 import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -18,7 +20,7 @@ import java.io.IOException;
 public class Controller extends HttpServlet {
 
     @Inject
-    IMaterialService materialService;
+    ISupplierService supplierService;
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -26,10 +28,14 @@ public class Controller extends HttpServlet {
 
         try {
 
-            request.getSession().setAttribute("material", materialService.find(1L));
+
+//            service.create(new Material("test1", null, null));
+            Supplier supplier = supplierService.read(3L);
+
+            request.getSession().setAttribute("material", supplier);
 
         } catch (ServiceException e) {
-            e.printStackTrace();
+            System.out.println("--------ERROR------------:" + e);
         }
 
         RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/index.jsp");

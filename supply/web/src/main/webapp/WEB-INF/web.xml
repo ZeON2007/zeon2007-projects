@@ -6,6 +6,19 @@
 
   <display-name>Supply</display-name>
 
+  <filter>
+    <filter-name>encodingFilter</filter-name>
+    <filter-class>by.herzhot.filters.EncodingFilter</filter-class>
+    <init-param>
+      <param-name>encoding</param-name>
+      <param-value>UTF-8</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>encodingFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
   <welcome-file-list>
     <welcome-file>/servlet</welcome-file>
   </welcome-file-list>

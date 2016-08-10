@@ -26,12 +26,12 @@
       <version>1.0-SNAPSHOT</version>
       <type>war</type>
     </dependency>
-    <dependency>
-      <groupId>by.herzhot</groupId>
-      <artifactId>dao</artifactId>
-      <version>1.0-SNAPSHOT</version>
-      <type>ejb</type>
-    </dependency>
+    <!--<dependency>-->
+      <!--<groupId>by.herzhot</groupId>-->
+      <!--<artifactId>dao</artifactId>-->
+      <!--<version>1.0-SNAPSHOT</version>-->
+      <!--<type>ejb</type>-->
+    <!--</dependency>-->
     <dependency>
       <groupId>by.herzhot</groupId>
       <artifactId>business</artifactId>

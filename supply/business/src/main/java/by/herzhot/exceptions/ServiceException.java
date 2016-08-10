@@ -1,4 +1,4 @@
-package by.herzhot;
+package by.herzhot.exceptions;
 
 /**
  * @author Herzhot
