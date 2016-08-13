@@ -21,7 +21,7 @@ public class Supplier implements IEntity {
     private String settlementAccount;
     @Column(name = "contact_person", insertable = false, updatable = false)
     private String contactPerson;
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "supplier")
     private Set<Material> materials;
 
     public Supplier() {}

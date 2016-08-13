@@ -20,7 +20,7 @@ public class Material implements IEntity {
     private String name;
     @Column(name = "price")
     private Integer price;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_supplier")
     private Supplier supplier;
 

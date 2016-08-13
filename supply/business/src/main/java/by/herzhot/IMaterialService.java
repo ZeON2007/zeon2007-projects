@@ -1,6 +1,9 @@
 package by.herzhot;
 
+import by.herzhot.exceptions.ServiceException;
+
 import javax.ejb.Local;
+import java.util.List;
 
 /**
  * @author Herzhot
@@ -10,6 +13,6 @@ import javax.ejb.Local;
 @Local
 public interface IMaterialService extends IService<Material> {
 
-
+    List<Material> findByCriterion(String criterion) throws ServiceException;
 
 }

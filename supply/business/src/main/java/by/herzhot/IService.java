@@ -2,7 +2,6 @@ package by.herzhot;
 
 import by.herzhot.exceptions.ServiceException;
 
-import javax.ejb.Local;
 import java.util.List;
 
 /**
@@ -10,7 +9,7 @@ import java.util.List;
  * @version 1.0
  *          03.08.2016
  */
-@Local
+
 public interface IService<T> {
 
     void create(T t) throws ServiceException;

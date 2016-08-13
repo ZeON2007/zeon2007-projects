@@ -6,7 +6,10 @@ import by.herzhot.utils.LoggingUtil;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
-import java.lang.reflect.ParameterizedType;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.List;
 
 /**
@@ -45,17 +48,40 @@ public abstract class BaseDao<T> implements IDao<T> {
 
     @Override
     public void update(T t) throws DaoException {
-
+        try {
+            entityManager.merge(t);
+        } catch (PersistenceException e) {
+            logger.logError(getClass(), "Update entity error: " + e.getMessage());
+            throw new DaoException();
+        }
     }
 
     @Override
     public void delete(Long id) throws DaoException {
-
+        try {
+            T entity = entityManager.find(getPersistentClass(), id);
+            entityManager.remove(entity);
+        } catch (PersistenceException e) {
+            logger.logError(getClass(), "Delete entity error: " + e.getMessage());
+            throw new DaoException();
+        }
     }
 
     @Override
     public List<T> readAll() throws DaoException {
-        return null;
+        List<T> entityList;
+        try {
+            CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+            CriteriaQuery<T> criteriaQuery = cb.createQuery(getPersistentClass());
+            Root<T> from = criteriaQuery.from(getPersistentClass());
+            CriteriaQuery<T> select = criteriaQuery.select(from);
+            TypedQuery<T> typedQuery = entityManager.createQuery(select);
+            entityList = typedQuery.getResultList();
+        } catch (PersistenceException e) {
+            logger.logError(getClass(), "Find all entities error: " + e.getMessage());
+            throw new DaoException();
+        }
+        return entityList;
     }
 
     @Override
