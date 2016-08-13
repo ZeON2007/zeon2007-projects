@@ -3,13 +3,12 @@ package by.herzhot.impl;
 import by.herzhot.BaseDao;
 import by.herzhot.IMaterialDao;
 import by.herzhot.Material;
+import by.herzhot.Supplier;
 import by.herzhot.exceptions.DaoException;
 
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,12 +22,14 @@ public class MaterialDaoImpl extends BaseDao<Material> implements IMaterialDao {
     public List<Material> findByCriterion(String criterion) throws DaoException {
 
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Material> cMaterial = cb.createQuery(Material.class);
-        Root<Material> material = cMaterial.from(Material.class);
-        Predicate p1 = cb.like(material.<String>get("name"), "%"+criterion+"%");
-        Predicate p2 = cb.like(material.<String>get("supplier").<String>get("name"), "%"+criterion+"%");
-        CriteriaQuery<Material> select = cMaterial.select(material).where(cb.or(p1, p2));
-        TypedQuery<Material> typedQuery = entityManager.createQuery(select);
+        CriteriaQuery<Material> cq = cb.createQuery(Material.class);
+        Root<Material> material = cq.from(Material.class);
+        cq.select(material);
+        Join<Material, Supplier> supplier = material.join("supplier", JoinType.LEFT);
+        Predicate p1 = cb.like(supplier.<String>get("name"), "%"+criterion+"%");
+        Predicate p2 = cb.like(material.<String>get("name"), "%"+criterion+"%");
+        cq.where(cb.or(p1, p2));
+        TypedQuery<Material> typedQuery = entityManager.createQuery(cq);
         return typedQuery.getResultList();
     }
 

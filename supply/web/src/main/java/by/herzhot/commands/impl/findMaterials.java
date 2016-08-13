@@ -34,6 +34,7 @@ public class FindMaterials implements ICommand {
         try {
 
             criterion = URLDecoder.decode(criterion, "UTF-8");
+            session.setAttribute(Parameters.CRITERION, criterion);
             session.setAttribute(Parameters.MATERIAL_LIST, materialService.findByCriterion(criterion));
 
         } catch (ServiceException e) {

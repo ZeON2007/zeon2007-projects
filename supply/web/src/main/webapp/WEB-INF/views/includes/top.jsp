@@ -37,9 +37,9 @@
                        class="form-control"
                        type="text"
                        name="criterion"
-                       value=""
+                       value="${sessionScope.criterion}"
                        placeholder="Enter a search criterion"
-                       style="width: 400px">
+                       style="width: 400px" autofocus>
             </div>
             <button class="btn btn-default" type="submit" id="findSubmit" onclick="encode()">
                 Search

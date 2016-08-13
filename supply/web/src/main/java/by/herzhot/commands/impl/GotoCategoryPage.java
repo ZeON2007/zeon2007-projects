@@ -29,9 +29,11 @@ public class GotoCategoryPage implements ICommand {
         HttpSession session = request.getSession();
 
         if (request.getParameter(Parameters.CATEGORY).equals("materials")) {
-            if (!session.getAttribute(Parameters.CATEGORY).equals("materials")) {
+            if (!session.getAttribute(Parameters.CATEGORY).equals("materials")
+                    || session.getAttribute(Parameters.CRITERION) != null) {
                 try {
 
+                    session.removeAttribute(Parameters.CRITERION);
                     session.setAttribute(Parameters.CATEGORY, "materials");
                     session.setAttribute(Parameters.MATERIAL_LIST, materialService.readAll());
 
