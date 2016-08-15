@@ -4,11 +4,13 @@
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
 
-    <persistence-unit name="supplyDDL" transaction-type="JTA">
+    <persistence-unit name="supply" transaction-type="JTA">
         <jta-data-source>java:/jdbc/mysql</jta-data-source>
+        <class>by.herzhot.Material</class>
+        <class>by.herzhot.Supplier</class>
     </persistence-unit>
 
-    <persistence-unit name="supply" transaction-type="JTA">
+    <persistence-unit name="supplyXA" transaction-type="JTA">
         <jta-data-source>java:/jdbc/mysqlXA</jta-data-source>
         <class>by.herzhot.Material</class>
         <class>by.herzhot.Supplier</class>

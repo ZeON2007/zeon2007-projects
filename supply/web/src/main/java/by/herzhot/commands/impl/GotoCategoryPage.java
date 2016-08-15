@@ -46,6 +46,7 @@ public class GotoCategoryPage implements ICommand {
                 }
 
             } else if (request.getParameter(Parameters.CATEGORY).equals("suppliers")) {
+                session.removeAttribute(Parameters.CRITERION);
                 session.setAttribute(Parameters.CATEGORY, "suppliers");
             }
         }

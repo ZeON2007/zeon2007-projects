@@ -38,7 +38,9 @@ public class EditMaterial implements ICommand {
 
         String stringMaterialPrice = request.getParameter(Parameters.MATERIAL_PRICE);
         if (priceValidate(stringMaterialPrice)) {
-            materialPrice = Integer.valueOf(stringMaterialPrice);
+            if (stringMaterialPrice != null && !stringMaterialPrice.equals("")) {
+                materialPrice = Integer.valueOf(stringMaterialPrice);
+            }
         } else {
             request.setAttribute(Parameters.ERROR_INPUT,
                     MessageManager.INSTANCE.getProperty(Messages.ERROR_INPUT, request));
@@ -71,7 +73,7 @@ public class EditMaterial implements ICommand {
                     MessageManager.INSTANCE.getProperty(Messages.ERROR_DATABASE, request));
             page = PathManager.INSTANCE.getProperty(Paths.ERROR_PAGE_PATH);
         }
-
+        request.getSession().removeAttribute(Parameters.CRITERION);
         return page;
     }
 
@@ -84,8 +86,10 @@ public class EditMaterial implements ICommand {
                     success = true;
                 }
             } catch (NumberFormatException e) {
-                success = false;
+                    success = false;
             }
+        } else {
+            success = true;
         }
         return success;
     }
