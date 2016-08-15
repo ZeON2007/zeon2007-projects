@@ -8,8 +8,8 @@
 	</head>
 	<body>
 		<h2>Ошибка:</h2>
-		${sessionScope.errorDatabase} <br/>
-		${sessionScope.errorCriterion} <br/>
+		${requestScope.errorDatabase} <br/>
+		${requestScope.errorCriterion} <br/>
 		<a href="<c:url value="controller">
                     <c:param name="command" value="gotoMainPage" />
                  </c:url>" >

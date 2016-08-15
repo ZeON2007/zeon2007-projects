@@ -8,7 +8,6 @@ import by.herzhot.exceptions.DaoException;
 
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
-import java.util.ArrayList;
 import java.util.List;
 
 /**

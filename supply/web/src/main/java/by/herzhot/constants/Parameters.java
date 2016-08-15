@@ -24,6 +24,7 @@ public class Parameters {
 
     public static final String ERROR_DATABASE = "errorDatabase";
     public static final String ERROR_CRITERION = "errorCriterion";
+    public static final String ERROR_INPUT = "errorInput";
 
 
     private Parameters(){}

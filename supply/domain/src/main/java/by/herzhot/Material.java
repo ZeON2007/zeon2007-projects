@@ -2,6 +2,7 @@ package by.herzhot;
 
 
 import javax.persistence.*;
+import java.util.Objects;
 
 /**
  * @author Herzhot
@@ -11,6 +12,8 @@ import javax.persistence.*;
 @Entity
 @Table(name = "material")
 public class Material implements IEntity {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,6 +32,22 @@ public class Material implements IEntity {
         this.name = name;
         this.price = price;
         this.supplier = supplier;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Material material = (Material) o;
+        return id.equals(material.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (price != null ? price.hashCode() : 0);
+        return result;
     }
 
     @Override

@@ -33,6 +33,8 @@
                value="${requestScope.material.price}"
                placeholder="Enter a price" >
 
+        <p>${requestScope.errorInput}</p>
+
         <label for="selectSupplier" class="sr-only">Supplier</label>
         <select id="selectSupplier" name="supplierId" size="5" class="form-control">
             <option value="">N/A</option>

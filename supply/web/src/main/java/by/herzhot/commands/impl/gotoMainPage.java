@@ -31,6 +31,7 @@ public class GotoMainPage implements ICommand {
 
         try {
 
+            session.removeAttribute(Parameters.CRITERION);
             session.setAttribute(Parameters.MATERIAL_LIST, materialService.readAll());
 
         } catch (ServiceException e) {

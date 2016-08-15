@@ -28,24 +28,26 @@ public class GotoCategoryPage implements ICommand {
         String page = PathManager.INSTANCE.getProperty(Paths.MAIN_PAGE_PATH);
         HttpSession session = request.getSession();
 
-        if (request.getParameter(Parameters.CATEGORY).equals("materials")) {
-            if (!session.getAttribute(Parameters.CATEGORY).equals("materials")
-                    || session.getAttribute(Parameters.CRITERION) != null) {
-                try {
+        if (request.getParameter(Parameters.CATEGORY) != null) {
+            if (request.getParameter(Parameters.CATEGORY).equals("materials")) {
+                if (!session.getAttribute(Parameters.CATEGORY).equals("materials")
+                        || session.getAttribute(Parameters.CRITERION) != null) {
+                    try {
 
-                    session.removeAttribute(Parameters.CRITERION);
-                    session.setAttribute(Parameters.CATEGORY, "materials");
-                    session.setAttribute(Parameters.MATERIAL_LIST, materialService.readAll());
+                        session.removeAttribute(Parameters.CRITERION);
+                        session.setAttribute(Parameters.CATEGORY, "materials");
+                        session.setAttribute(Parameters.MATERIAL_LIST, materialService.readAll());
 
-                } catch (ServiceException e) {
-                    request.setAttribute(Parameters.ERROR_DATABASE,
-                            MessageManager.INSTANCE.getProperty(Messages.ERROR_DATABASE, request));
-                    page = PathManager.INSTANCE.getProperty(Paths.ERROR_PAGE_PATH);
+                    } catch (ServiceException e) {
+                        request.setAttribute(Parameters.ERROR_DATABASE,
+                                MessageManager.INSTANCE.getProperty(Messages.ERROR_DATABASE, request));
+                        page = PathManager.INSTANCE.getProperty(Paths.ERROR_PAGE_PATH);
+                    }
                 }
-            }
 
-        } else if (request.getParameter(Parameters.CATEGORY).equals("suppliers")) {
-            session.setAttribute(Parameters.CATEGORY, "suppliers");
+            } else if (request.getParameter(Parameters.CATEGORY).equals("suppliers")) {
+                session.setAttribute(Parameters.CATEGORY, "suppliers");
+            }
         }
 
         return page;

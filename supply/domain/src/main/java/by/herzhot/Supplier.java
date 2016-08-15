@@ -12,6 +12,8 @@ import java.util.Set;
 @Table(name = "supplier")
 public class Supplier implements IEntity {
 
+    private static final long serialVersionUID = 1L;
+
     @Id
     @Column(name = "id_supplier")
     private Long id;
@@ -30,6 +32,23 @@ public class Supplier implements IEntity {
         this.settlementAccount = settlementAccount;
         this.contactPerson = contactPerson;
         this.materials = materials;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Supplier supplier = (Supplier) o;
+        return id.equals(supplier.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (settlementAccount != null ? settlementAccount.hashCode() : 0);
+        result = 31 * result + (contactPerson != null ? contactPerson.hashCode() : 0);
+        return result;
     }
 
     @Override

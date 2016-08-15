@@ -9,5 +9,7 @@ public class Messages {
 
     public static final String ERROR_DATABASE = "message.error.database";
     public static final String ERROR_CRITERION = "message.error.criterion";
+    public static final String ERROR_INPUT = "message.error.input";
 
+    private Messages() {}
 }

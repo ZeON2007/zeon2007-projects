@@ -26,6 +26,7 @@ import java.util.Map;
 public class FrontController extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
+
     private Map<String, IService> services;
     @Inject
     private IMaterialService materialService;

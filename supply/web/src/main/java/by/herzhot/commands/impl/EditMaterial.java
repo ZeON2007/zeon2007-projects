@@ -37,10 +37,12 @@ public class EditMaterial implements ICommand {
         }
 
         String stringMaterialPrice = request.getParameter(Parameters.MATERIAL_PRICE);
-        if (stringMaterialPrice != null
-                && !stringMaterialPrice.equals("")
-                && Integer.valueOf(stringMaterialPrice) > 0) {
+        if (priceValidate(stringMaterialPrice)) {
             materialPrice = Integer.valueOf(stringMaterialPrice);
+        } else {
+            request.setAttribute(Parameters.ERROR_INPUT,
+                    MessageManager.INSTANCE.getProperty(Messages.ERROR_INPUT, request));
+            page = PathManager.INSTANCE.getProperty(Paths.EDIT_MATERIAL_PAGE_PATH);
         }
 
         try {
@@ -53,14 +55,17 @@ public class EditMaterial implements ICommand {
                 material.setPrice(materialPrice);
             }
             material.setSupplier(supplier);
-            if (selectedItem == null || selectedItem.equals("")) {
-                materialService.create(material);
+            if (priceValidate(stringMaterialPrice)) {
+                if (selectedItem == null || selectedItem.equals("")) {
+                    materialService.create(material);
+                } else {
+                    material.setId(Long.valueOf(selectedItem));
+                    materialService.update(material);
+                }
+                request.getSession().setAttribute(Parameters.MATERIAL_LIST, materialService.readAll());
             } else {
-                material.setId(Long.valueOf(selectedItem));
-                materialService.update(material);
+                request.setAttribute(Parameters.MATERIAL, material);
             }
-            request.getSession().setAttribute(Parameters.MATERIAL_LIST, materialService.readAll());
-
         } catch (ServiceException e) {
             request.setAttribute(Parameters.ERROR_DATABASE,
                     MessageManager.INSTANCE.getProperty(Messages.ERROR_DATABASE, request));
@@ -68,5 +73,20 @@ public class EditMaterial implements ICommand {
         }
 
         return page;
+    }
+
+    private boolean priceValidate(String price) {
+        boolean success = false;
+        if (price != null && !price.equals("")) {
+            try {
+                Integer priceValue = Integer.valueOf(price);
+                if (priceValue > 0) {
+                    success = true;
+                }
+            } catch (NumberFormatException e) {
+                success = false;
+            }
+        }
+        return success;
     }
 }
