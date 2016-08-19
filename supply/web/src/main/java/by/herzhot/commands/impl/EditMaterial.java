@@ -8,8 +8,11 @@ import by.herzhot.constants.Paths;
 import by.herzhot.exceptions.ServiceException;
 import by.herzhot.managers.MessageManager;
 import by.herzhot.managers.PathManager;
+import by.herzhot.utils.MenuHelper;
+import by.herzhot.utils.Paginator;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 /**
@@ -22,7 +25,11 @@ public class EditMaterial implements ICommand {
     @Override
     public String execute(HttpServletRequest request, Map<String, IService> services) {
 
-        String page = null;
+        String page = PathManager.INSTANCE.getProperty(Paths.INDEX_PAGE_PATH);
+        HttpSession session = request.getSession();
+        Paginator paginator = Paginator.INSTANCE;
+        MenuHelper menuHelper = MenuHelper.INSTANCE;
+        Map<String, Integer> paginationParams;
         Supplier supplier = null;
         Material material = new Material();
         Integer materialPrice = null;
@@ -64,7 +71,10 @@ public class EditMaterial implements ICommand {
                     material.setId(Long.valueOf(selectedItem));
                     materialService.update(material);
                 }
-                request.getSession().setAttribute(Parameters.MATERIAL_LIST, materialService.readAll());
+                paginationParams = paginator.update(request, materialService.count());
+                session.setAttribute(Parameters.PAGINATION_PARAMS, paginationParams);
+                session.setAttribute(Parameters.PAGINATION_MENU, menuHelper.createStringMenu(paginationParams));
+                session.setAttribute(Parameters.MATERIAL_LIST, materialService.readAll(paginationParams));
             } else {
                 request.setAttribute(Parameters.MATERIAL, material);
             }
@@ -73,7 +83,7 @@ public class EditMaterial implements ICommand {
                     MessageManager.INSTANCE.getProperty(Messages.ERROR_DATABASE, request));
             page = PathManager.INSTANCE.getProperty(Paths.ERROR_PAGE_PATH);
         }
-        request.getSession().removeAttribute(Parameters.CRITERION);
+        session.removeAttribute(Parameters.CRITERION);
         return page;
     }
 

@@ -71,8 +71,14 @@ public abstract class BaseService<T> implements IService<T> {
     }
 
     @Override
-    public Integer count() throws ServiceException {
-        return null;
+    public Long count() throws ServiceException {
+        Long count;
+        try {
+           count = getDao().count();
+        } catch (DaoException e) {
+            throw new ServiceException();
+        }
+        return count;
     }
 
     protected abstract IDao<T> getDao();

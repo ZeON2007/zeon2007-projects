@@ -23,8 +23,18 @@
                 <c:import url="../includes/navigation.jsp"/>
             </div>
 
-            <div class="col-xs-9" style="min-height: 400px">
-                <c:import url="../includes/content.jsp"/>
+            <div class="col-xs-9">
+
+                <div class="col-xs-12" style="min-height: 400px">
+                    <c:import url="../includes/content.jsp"/>
+                </div>
+
+                <c:if test="${sessionScope.category == 'materials'}">
+                    <div class="col-xs-12">
+                        <c:import url="../includes/pagination.jsp"/>
+                    </div>
+                </c:if>
+
             </div>
 
         </div>

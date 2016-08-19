@@ -18,6 +18,6 @@ public interface IDao<T> {
     void update(T t) throws DaoException;
     void delete(Long id) throws DaoException;
     List<T> readAll() throws DaoException;
-    Integer count() throws DaoException;
+    Long count() throws DaoException;
 
 }

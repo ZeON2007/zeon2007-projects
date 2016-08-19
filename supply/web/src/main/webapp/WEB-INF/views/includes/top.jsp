@@ -12,12 +12,14 @@
             <h1><c:out value="${m_portal}"/></h1>
         </div>
         <div class="col-xs-6">
-            <a style="padding-right: 15px" href="<c:url value="/${requestScope.currentPage}">
+            <a style="padding-right: 15px" href="<c:url value="controller">
+                     <c:param name="command" value="updatePage" />
                     <c:param name="language" value="ru" />
                  </c:url>">
                 <img src="${pageContext.request.contextPath}/assets/images/flags/russia.png">
             </a>
-            <a href="<c:url value="/${requestScope.currentPage}">
+            <a href="<c:url value="controller">
+                         <c:param name="command" value="updatePage" />
                         <c:param name="language" value="en" />
                      </c:url>">
                 <img src="${pageContext.request.contextPath}/assets/images/flags/usa.png">

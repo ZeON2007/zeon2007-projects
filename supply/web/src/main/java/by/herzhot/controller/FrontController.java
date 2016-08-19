@@ -48,12 +48,8 @@ public class FrontController extends HttpServlet {
         ICommand command = CommandFactory.INSTANCE.defineCommand(request);
         String page = command.execute(request, services);
 
-        if (page != null) {
-            RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher(page);
-            dispatcher.forward(request, response);
-        } else {
-            response.sendRedirect(request.getContextPath() + "/index.jsp");
-        }
+        RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher(page);
+        dispatcher.forward(request, response);
     }
 
     @Override

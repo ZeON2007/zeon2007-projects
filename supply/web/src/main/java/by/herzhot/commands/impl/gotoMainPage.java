@@ -9,6 +9,8 @@ import by.herzhot.constants.Paths;
 import by.herzhot.exceptions.ServiceException;
 import by.herzhot.managers.MessageManager;
 import by.herzhot.managers.PathManager;
+import by.herzhot.utils.MenuHelper;
+import by.herzhot.utils.Paginator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -28,11 +30,17 @@ public class GotoMainPage implements ICommand {
         IMaterialService materialService = (IMaterialService) services.get("materialService");
         String page = PathManager.INSTANCE.getProperty(Paths.MAIN_PAGE_PATH);
         HttpSession session = request.getSession();
+        Paginator paginator = Paginator.INSTANCE;
+        MenuHelper menuHelper = MenuHelper.INSTANCE;
+        Map<String, Integer> paginationParams;
 
         try {
+            paginationParams = paginator.update(request, materialService.count());
+            session.setAttribute(Parameters.PAGINATION_PARAMS, paginationParams);
+            session.setAttribute(Parameters.PAGINATION_MENU, menuHelper.createStringMenu(paginationParams));
 
             session.removeAttribute(Parameters.CRITERION);
-            session.setAttribute(Parameters.MATERIAL_LIST, materialService.readAll());
+            session.setAttribute(Parameters.MATERIAL_LIST, materialService.readAll(paginationParams));
 
         } catch (ServiceException e) {
             request.setAttribute(Parameters.ERROR_DATABASE,

@@ -17,5 +17,5 @@ public interface IService<T> {
     void update(T t) throws ServiceException;
     void delete(Long id) throws ServiceException;
     List<T> readAll() throws ServiceException;
-    Integer count() throws ServiceException;
+    Long count() throws ServiceException;
 }

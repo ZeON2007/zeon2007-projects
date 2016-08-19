@@ -8,9 +8,11 @@ import by.herzhot.constants.Paths;
 import by.herzhot.exceptions.ServiceException;
 import by.herzhot.managers.MessageManager;
 import by.herzhot.managers.PathManager;
+import by.herzhot.utils.MenuHelper;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -26,6 +28,7 @@ public class StartSession implements ICommand {
     public String execute(HttpServletRequest request, Map<String, IService> services) {
 
         String page = PathManager.INSTANCE.getProperty(Paths.MAIN_PAGE_PATH);
+        MenuHelper menuHelper = MenuHelper.INSTANCE;
         HttpSession session = request.getSession();
         String lastCommand = (String) session.getAttribute(Parameters.LAST_COMMAND);
 
@@ -34,11 +37,22 @@ public class StartSession implements ICommand {
             IMaterialService materialService = (IMaterialService) services.get("materialService");
             session.setAttribute(Parameters.LOCALE, new Locale("ru", "RU"));
             session.setAttribute(Parameters.CATEGORY, "materials");
+
+            Map<String, Integer> paginationParams =
+                    (Map<String, Integer>) session.getAttribute(Parameters.PAGINATION_PARAMS);
             try {
+                if (paginationParams == null) {
+                    paginationParams = new HashMap<>();
+                    paginationParams.put(Parameters.TOTAL_PAGES_QUANTITY, materialService.count().intValue());
+                    paginationParams.put(Parameters.QUANTITY_PER_PAGE, 20);
+                    paginationParams.put(Parameters.SELECTED_PAGE, 1);
+                    session.setAttribute(Parameters.PAGINATION_PARAMS, paginationParams);
+                    session.setAttribute(Parameters.PAGINATION_MENU, menuHelper.createStringMenu(paginationParams));
+                }
 
                 List<Supplier> suppliers = supplierService.readAll();
                 session.setAttribute(Parameters.SUPPLIER_LIST, suppliers);
-                List<Material> materials = materialService.readAll();
+                List<Material> materials = materialService.readAll(paginationParams);
                 session.setAttribute(Parameters.MATERIAL_LIST, materials);
 
             } catch (ServiceException e) {

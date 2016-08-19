@@ -75,6 +75,7 @@ public abstract class BaseDao<T> implements IDao<T> {
             CriteriaQuery<T> criteriaQuery = cb.createQuery(getPersistentClass());
             Root<T> from = criteriaQuery.from(getPersistentClass());
             CriteriaQuery<T> select = criteriaQuery.select(from);
+            criteriaQuery.orderBy(cb.asc(from.get("name")));
             TypedQuery<T> typedQuery = entityManager.createQuery(select);
             entityList = typedQuery.getResultList();
         } catch (PersistenceException e) {
@@ -85,8 +86,18 @@ public abstract class BaseDao<T> implements IDao<T> {
     }
 
     @Override
-    public Integer count() throws DaoException {
-        return null;
+    public Long count() throws DaoException {
+        Long count;
+        try {
+            CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+            CriteriaQuery<Long> cq = cb.createQuery(Long.class);
+            cq.select(cb.count(cq.from(getPersistentClass())));
+            count = entityManager.createQuery(cq).getSingleResult();
+        } catch (PersistenceException e) {
+            logger.logError(getClass(), "Get count error: " + e.getMessage());
+            throw new DaoException();
+        }
+        return count;
     }
 
     protected abstract Class<T> getPersistentClass();
