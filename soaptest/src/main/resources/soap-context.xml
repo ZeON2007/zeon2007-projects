@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <context:component-scan base-package="by.herzhot.soap" />
+
+    <bean id="marshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+        <property name="contextPath" value="by.herzhot.soap.pojos"/>
+    </bean>
+
+    <!--<bean id="service" class="by.herzhot.soap.SoapClient">-->
+        <!--<property name="defaultUri" value="http://HellMachine1:8088/mockUqcOrderReferBeanBinding"/>-->
+        <!--<property name="marshaller" ref="marshaller"/>-->
+        <!--<property name="unmarshaller" ref="marshaller"/>-->
+    <!--</bean>-->
+
+</beans>

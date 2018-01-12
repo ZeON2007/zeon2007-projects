@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd"
+>
+
+    <context:component-scan base-package="by.herzhot.ldap.entries" />
+
+    <bean id="props" class="java.util.Hashtable">
+        <constructor-arg>
+            <map key-type="java.lang.String" value-type="java.lang.Object">
+                <entry key="java.naming.ldap.version" value="2" />
+            </map>
+        </constructor-arg>
+    </bean>
+
+    <bean id="myContextSource" class="org.springframework.ldap.core.support.LdapContextSource" scope="prototype">
+        <property name="url" value="#{ T(by.herzhot.ldap.ContextHolder).getHost() }"/>
+        <property name="base" value="ou=test1"/>
+        <property name="userDn" value="uid=admin,ou=system"/>
+        <property name="password" value="secret"/>
+        <!--<lookup-method bean="props" name="getAnonymousEnv"/>-->
+        <property name="baseEnvironmentProperties" ref="props"/>
+    </bean>
+
+    <bean class="org.springframework.ldap.core.LdapTemplate" id="ldapTemplate" scope="prototype">
+        <lookup-method bean="myContextSource" name="getContextSource" />
+        <property name="contextSource" ref="myContextSource"/>
+    </bean>
+
+    <bean id="dao" class="by.herzhot.ldap.dao.impl.LdapDaoImpl">
+        <lookup-method bean="ldapTemplate" name="getLdapTemplate"/>
+    </bean>
+
+
+</beans>
