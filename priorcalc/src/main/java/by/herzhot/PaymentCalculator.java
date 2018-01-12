@@ -1,8 +1,7 @@
 package by.herzhot;
 
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PaymentCalculator {
 
@@ -55,7 +54,7 @@ public class PaymentCalculator {
         }
     }
 
-    public double[] calculatePayments(boolean needPrintResult) {
+    public void calculatePayments() {
         boolean needCalculate = true;
         while (needCalculate) {
 
@@ -73,19 +72,7 @@ public class PaymentCalculator {
                 }
             }
         }
-
-//        if (needPrintResult) {
-//            int count = 1;
-//            DecimalFormat df = new DecimalFormat("#.##");
-//            df.setRoundingMode(RoundingMode.CEILING);
-//            for (double num : debtParts) {
-//                System.out.println(count + " | " + df.format(num));
-//                count++;
-//            }
-//        }
         new ResultPrinter().print(paymentEntries);
-
-        return debtParts;
     }
 
     private double recalculatePaymentsByFirstPayment(double predictedPayment) {
