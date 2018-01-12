@@ -2,10 +2,7 @@ package by.herzhot;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class PaymentCalculator {
 
@@ -18,6 +15,7 @@ public class PaymentCalculator {
     private final double refundingRate;
     private double firstPredictedPayment;
     private double restAmount;
+    private int startMonth;
     private List<PaymentEntry> paymentEntries = new ArrayList<>();
 
     public PaymentCalculator(int months, double amount, double refundingRate) {
@@ -58,23 +56,39 @@ public class PaymentCalculator {
     }
 
     public double[] calculatePayments(boolean needPrintResult) {
+        boolean needCalculate = true;
+        while (needCalculate) {
 
-        recalculatePaymentsByFirstPayment(firstPredictedPayment, 0);
+            recalculatePaymentsByFirstPayment(firstPredictedPayment);
 
-        if (needPrintResult) {
-            int count = 1;
-            DecimalFormat df = new DecimalFormat("#.##");
-            df.setRoundingMode(RoundingMode.CEILING);
-            for (double num : debtParts) {
-                System.out.println(count + " | " + df.format(num));
-                count++;
+            for (int i = startMonth; i < months; i++) {
+                paymentEntries.add(new PaymentEntry(i + 1, debtParts[i] + additionalPayments[i], 0));
+                if (additionalPayments[i] > 0) {
+                    restAmount -= additionalPayments[i];
+                    startMonth = i + 1;
+                    break;
+                }
+                if (i == months - 1) {
+                    needCalculate = false;
+                }
             }
         }
+
+//        if (needPrintResult) {
+//            int count = 1;
+//            DecimalFormat df = new DecimalFormat("#.##");
+//            df.setRoundingMode(RoundingMode.CEILING);
+//            for (double num : debtParts) {
+//                System.out.println(count + " | " + df.format(num));
+//                count++;
+//            }
+//        }
+        new ResultPrinter().print(paymentEntries);
 
         return debtParts;
     }
 
-    private double recalculatePaymentsByFirstPayment(double predictedPayment, int startMonth) {
+    private double recalculatePaymentsByFirstPayment(double predictedPayment) {
         debtParts[startMonth] = predictedPayment;
         for (int i = startMonth + 1; i < months; i++) {
             if (i == 1) {
@@ -85,23 +99,30 @@ public class PaymentCalculator {
             }
         }
         double sum = getDeptPartSum(months - 1);
-        if (sum > amount - accuracy && sum < amount + accuracy) {
+        if (sum > restAmount - accuracy && sum < restAmount + accuracy) {
             return sum;
         } else {
-            return recalculatePaymentsByFirstPayment(getNextPredictedPayment(sum), );
+            return recalculatePaymentsByFirstPayment(getNextPredictedPayment(sum));
         }
     }
 
     private double getNextPredictedPayment(double actualAmount) {
-        if (actualAmount < amount) {
-            firstPredictedPayment = firstPredictedPayment + (firstPredictedPayment * (1 + (amount - actualAmount) / amount) - firstPredictedPayment) / 2;
+        if (actualAmount < restAmount) {
+            firstPredictedPayment = firstPredictedPayment + (firstPredictedPayment * (1 + (restAmount - actualAmount) / restAmount) - firstPredictedPayment) / 2;
             return firstPredictedPayment;
-        } else if (actualAmount > amount) {
-             firstPredictedPayment = firstPredictedPayment - (firstPredictedPayment - firstPredictedPayment / (1 + (actualAmount - amount) / actualAmount)) / 2;
+        } else if (actualAmount > restAmount) {
+             firstPredictedPayment = firstPredictedPayment - (firstPredictedPayment - firstPredictedPayment / (1 + (actualAmount - restAmount) / actualAmount)) / 2;
              return firstPredictedPayment;
         } else {
             return firstPredictedPayment;
         }
+    }
+
+    private double calculateMontlyPrecent() {
+         return paymentEntries.stream()
+                .mapToDouble(PaymentEntry::getDebtPart)
+                .sum()
+                ;
     }
 
 }
