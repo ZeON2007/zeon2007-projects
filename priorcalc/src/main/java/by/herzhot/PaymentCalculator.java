@@ -16,12 +16,10 @@ public class PaymentCalculator {
     private double predictedPayment;
     private double leftPredictedPayment;
     private double rightPredictedPayment;
-    private double restAmount;
     private int startMonth;
-    private int counter = 0;
     private List<PaymentEntry> paymentEntries = new ArrayList<>();
 
-    public PaymentCalculator(int months, double amount, double refundingRate) {
+    public PaymentCalculator(int months , int offset, double amount, double refundingRate) {
         this.refundingRate = refundingRate;
         this.months = months;
         this.amount = amount;
@@ -29,18 +27,10 @@ public class PaymentCalculator {
         this.debtParts = new double[months];
         this.additionalPayments = new double[months];
         this.predictedPayment = amount / 100;
-        this.restAmount = amount;
         this.rightPredictedPayment = amount;
+        this.startMonth = offset;
         initPercents();
         initAdditionalPayments();
-    }
-
-    private double getDeptPartSum(int index) {
-        double sum = 0;
-        for (int t = index; t >= 0; t--) {
-            sum += debtParts[t];
-        }
-        return sum;
     }
 
     private void initPercents() {
@@ -54,58 +44,33 @@ public class PaymentCalculator {
     }
 
     private void initAdditionalPayments() {
-        for (int i = 0; i < 61; i++) {
+        for (int i = 0; i < 50; i++) {
             additionalPayments[i] = 600;
         }
     }
 
-    public void calculatePayments() {
-        boolean needCalculate = true;
-        while (needCalculate) {
+    public List<PaymentEntry> calculatePayments() {
 
             recalculatePaymentsByFirstPayment(predictedPayment);
 
-            leftPredictedPayment = 0;
-            rightPredictedPayment = predictedPayment + 1;
+            paymentEntries.add(new PaymentEntry(startMonth, debtParts[startMonth] + additionalPayments[startMonth], calculateMontlyPrecent(startMonth)));
 
-            for (int i = startMonth; i < months; i++) {
+        return paymentEntries;
 
-                if (restAmount < additionalPayments[i]) {
-                    for (int j  = 0; j < additionalPayments.length; j++) {
-                        additionalPayments[j] = 0.0;
-                    }
-                }
-
-                paymentEntries.add(new PaymentEntry(i + 1, debtParts[i] + additionalPayments[i], calculateMontlyPrecent(i)));
-
-                if (additionalPayments[i] > 0) {
-                    restAmount -= additionalPayments[i];
-                    startMonth = i + 1;
-                    break;
-                }
-
-                if (i == months - 1) {
-                    needCalculate = false;
-                }
-            }
-        }
-        System.out.println("Number of iterations: " + counter);
-        new ResultPrinter().print(paymentEntries);
     }
 
     private double recalculatePaymentsByFirstPayment(double predictedPayment) {
-        counter++;
         debtParts[startMonth] = predictedPayment;
         for (int i = startMonth + 1; i < months; i++) {
             if (i == 1) {
                 debtParts[i] = (1 + percents[i]) * debtParts[i - 1] + (percents[i - 1] - percents[i]) * amount;
             } else {
-                debtParts[i] = (1 + percents[i])*debtParts[i - 1] +
+                debtParts[i] = (1 + percents[i]) * debtParts[i - 1] +
                         (percents[i] - percents[i - 1]) * getDeptPartSum(i) + (percents[i - 1] - percents[i]) * amount;
             }
         }
         double sum = getDeptPartSum(months - 1);
-        if (sum > restAmount - accuracy && sum < restAmount + accuracy) {
+        if (sum > amount - accuracy && sum < amount + accuracy) {
             return sum;
         } else {
             return recalculatePaymentsByFirstPayment(getNextPredictedPayment(sum));
@@ -113,11 +78,11 @@ public class PaymentCalculator {
     }
 
     private double getNextPredictedPayment(double actualAmount) {
-        if (actualAmount < restAmount) {
+        if (actualAmount < amount) {
             leftPredictedPayment = predictedPayment;
             predictedPayment = (leftPredictedPayment + rightPredictedPayment) / 2;
             return predictedPayment;
-        } else if (actualAmount > restAmount) {
+        } else if (actualAmount > amount) {
             rightPredictedPayment = predictedPayment;
             predictedPayment = (leftPredictedPayment + rightPredictedPayment) / 2;
              return predictedPayment;
@@ -129,6 +94,14 @@ public class PaymentCalculator {
     private double calculateMontlyPrecent(int index) {
          double rest = amount - paymentEntries.stream().mapToDouble(PaymentEntry::getDebtPart).sum();
          return rest * percents[index];
+    }
+
+    private double getDeptPartSum(int index) {
+        double sum = 0;
+        for (int t = index; t >= 0; t--) {
+            sum += debtParts[t];
+        }
+        return sum;
     }
 
 }
