@@ -62,7 +62,7 @@ public class PaymentCalculator {
             recalculatePaymentsByFirstPayment(firstPredictedPayment);
 
             for (int i = startMonth; i < months; i++) {
-                paymentEntries.add(new PaymentEntry(i + 1, debtParts[i] + additionalPayments[i], 0));
+                paymentEntries.add(new PaymentEntry(i + 1, debtParts[i] + additionalPayments[i], calculateMontlyPrecent(i)));
                 if (additionalPayments[i] > 0) {
                     restAmount -= additionalPayments[i];
                     startMonth = i + 1;
@@ -118,11 +118,9 @@ public class PaymentCalculator {
         }
     }
 
-    private double calculateMontlyPrecent() {
-         return paymentEntries.stream()
-                .mapToDouble(PaymentEntry::getDebtPart)
-                .sum()
-                ;
+    private double calculateMontlyPrecent(int index) {
+         double rest = amount - paymentEntries.stream().mapToDouble(PaymentEntry::getDebtPart).sum();
+         return rest * percents[index];
     }
 
 }

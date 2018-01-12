@@ -53,7 +53,7 @@ public class Main extends Application {
 
 
         double[] payments = new PaymentCalculator(years * 12, amountBYN, refundingRate).calculatePayments(true);
-        System.out.println("Monthly payment: " + (payments[0] + amountBYN * ((double) 10/((double) 100 * (double) 12))));
+//        System.out.println("Monthly payment: " + (payments[0] + amountBYN * ((double) 10/((double) 100 * (double) 12))));
     }
 
     @Override
