@@ -18,8 +18,9 @@ public class PaymentCalculator {
     private double rightPredictedPayment;
     private int startMonth;
     private List<PaymentEntry> paymentEntries = new ArrayList<>();
+    private Main main;
 
-    public PaymentCalculator(int months , int offset, double amount, double refundingRate) {
+    public PaymentCalculator(int months , int offset, double amount, double refundingRate, Main main) {
         this.refundingRate = refundingRate;
         this.months = months;
         this.amount = amount;
@@ -29,6 +30,7 @@ public class PaymentCalculator {
         this.predictedPayment = amount / 100;
         this.rightPredictedPayment = amount;
         this.startMonth = offset;
+        this.main = main;
         initPercents();
         initAdditionalPayments();
     }
@@ -44,16 +46,26 @@ public class PaymentCalculator {
     }
 
     private void initAdditionalPayments() {
-        for (int i = 0; i < 50; i++) {
-            additionalPayments[i] = 600;
-        }
+//        for (int i = 0; i < 180; i++) {
+//            additionalPayments[i] = 958;
+//        }
     }
 
     public List<PaymentEntry> calculatePayments() {
 
             recalculatePaymentsByFirstPayment(predictedPayment);
 
-            paymentEntries.add(new PaymentEntry(startMonth, debtParts[startMonth] + additionalPayments[startMonth], calculateMontlyPrecent(startMonth)));
+            if (amount < additionalPayments[startMonth]) {
+                if (main.isNeedRefresh()) {
+                    System.out.println("Last month: " + (startMonth + 1));
+                    main.setNeedRefresh(false);
+                }
+                for (int j = 0; j < additionalPayments.length; j++) {
+                    additionalPayments[j] = 0.0;
+                }
+            }
+
+            paymentEntries.add(new PaymentEntry(startMonth + 1, debtParts[startMonth] + additionalPayments[startMonth], calculateMontlyPrecent(startMonth)));
 
         return paymentEntries;
 

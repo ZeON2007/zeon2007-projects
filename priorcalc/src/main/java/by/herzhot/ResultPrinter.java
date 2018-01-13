@@ -11,8 +11,8 @@ public class ResultPrinter {
 
 
         }
-        System.out.println("Sum of debts: " + entries.stream().mapToDouble(PaymentEntry::getDebtPart).sum());
-        System.out.println("Sum of precents: " + entries.stream().mapToDouble(PaymentEntry::getPrecentPart).sum());
-        System.out.println("Sum of month payments: " + entries.stream().mapToDouble(PaymentEntry::getPaymentPerMonth).sum());
+//        System.out.println("Sum of debts: " + entries.stream().mapToDouble(PaymentEntry::getDebtPart).sum());
+        System.out.println("Amount of overpayments: " + entries.stream().mapToDouble(PaymentEntry::getPrecentPart).sum());
+//        System.out.println("Payment amount: " + entries.stream().mapToDouble(PaymentEntry::getPaymentPerMonth).sum());
     }
 }
