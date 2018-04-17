@@ -37,18 +37,24 @@ public class PaymentCalculator {
 
     private void initPercents() {
         for (int i = 0; i < months; i++) {
-            if (i < 12) {
-                percents[i] = (refundingRate - 1) / ((double) 100 * (double) 12);
+            if (i < 0) {
+                percents[i] = (refundingRate - 2.5) / ((double) 100 * (double) 12);
             } else {
-                percents[i] = (refundingRate + 3) / ((double) 100 * (double) 12);
+                percents[i] = (refundingRate) / ((double) 100 * (double) 12);
             }
         }
     }
 
     private void initAdditionalPayments() {
-//        for (int i = 0; i < 180; i++) {
-//            additionalPayments[i] = 958;
+        for (int i = 0; i < 36; i++) {
+            additionalPayments[i] = 0;
+        }
+//        for (int i = 12; i < 36; i++) {
+//            additionalPayments[i] = 766;
 //        }
+        for (int i = 36; i < 204; i++) {
+            additionalPayments[i] = 0;
+        }
     }
 
     public List<PaymentEntry> calculatePayments() {

@@ -20,29 +20,21 @@ public class Main {
     }
 
     public static void main(String[] args) throws FileNotFoundException {
+        long time = System.currentTimeMillis();
 
-        File file = new File("payment.txt");
-        FileOutputStream fos = new FileOutputStream(file);
+        new Main().execute();
 
-        // Create new print stream for file.
-        PrintStream ps = new PrintStream(fos);
-
-        // Set file print stream.
-        System.setOut(ps);
-
-        Main main = new Main();
-        main.execute();
-
+        System.out.println("Time is " + (System.currentTimeMillis() - time));
     }
 
     private void execute() {
 
         List<PaymentEntry> paymentEntries = new ArrayList<>();
-        double amountBYN = 40000;
-        int months = 180;
-        double refundingRate = 11; // 11
+        double amountBYN = 10000;
+        int months = 204;
+        double refundingRate = 10.5; // 11
 
-        for (int i = 0; i < 180; i++) {
+        for (int i = 0; i < months; i++) {
             paymentEntries.addAll(new PaymentCalculator(months, i,
                     amountBYN - paymentEntries.stream().mapToDouble(PaymentEntry::getDebtPart).sum(), refundingRate, this).calculatePayments());
             if (paymentEntries.size() == months) {
@@ -53,6 +45,6 @@ public class Main {
             }
         }
 
-        new ResultPrinter().print(paymentEntries);
+        ResultPrinter.INSTANCE.print(paymentEntries);
     }
 }
