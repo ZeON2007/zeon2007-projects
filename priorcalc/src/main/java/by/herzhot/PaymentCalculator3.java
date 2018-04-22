@@ -56,6 +56,9 @@ public class PaymentCalculator3 {
             amounts[i] = payments[i] + percents[i];
 
             tempContractAmount -= payment;
+            if (tempContractAmount <= 0) {
+                break;
+            }
             payment *= reducedCoef;
         }
 
@@ -64,11 +67,18 @@ public class PaymentCalculator3 {
 
         for (int i = reducedRefundingRateDuration; i < creditDuration; i++) {
 
+            if (tempContractAmount <= 0) {
+                break;
+            }
+
             payments[i] = payment;
             percents[i] = tempContractAmount * (coef - 1);
             amounts[i] = payments[i] + percents[i];
 
             tempContractAmount -= payment;
+            if (tempContractAmount <= 0) {
+                break;
+            }
             payment *= coef;
         }
 
