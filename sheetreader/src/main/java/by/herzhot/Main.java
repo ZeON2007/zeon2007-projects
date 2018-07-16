@@ -58,7 +58,7 @@ public class Main {
 
         // Build a new authorized API client service.
         final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
-        final String spreadsheetId = "kRgQ62Vw7la363sm1QhZkj74fZqXJU6RmaMNGP0vLiw";
+        final String spreadsheetId = "1kRgQ62Vw7la363sm1QhZkj74fZqXJU6RmaMNGP0vLiw";
         final String range = "A1:G";
         Sheets service = new Sheets.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
                 .setApplicationName(APPLICATION_NAME)

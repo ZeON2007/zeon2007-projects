@@ -30,7 +30,7 @@ public class Main {
     private void execute() {
 
         List<PaymentEntry> paymentEntries = new ArrayList<>();
-        double amountBYN = 10000;
+        double amountBYN = 25000;
         int months = 204;
         double refundingRate = 10.5; // 11
 
